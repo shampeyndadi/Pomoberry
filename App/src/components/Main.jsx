@@ -1,5 +1,6 @@
 import React from "react";
 import styled, { createGlobalStyle } from "styled-components";
+import Pomodoro from "./Pomodoro";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -11,7 +12,7 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const Main = () => {
+function Main() {
   const encouragementMessage = "Keep going! You're doing great!";
   return (
     <>
@@ -19,14 +20,18 @@ const Main = () => {
         <GlobalStyle />
         <Container />
         <div className="flex items-center justify-center h-screen">
-          <div className="flex flex-col space-y-3">
-            <h2 className="text-2xl text-center font-bold text-pink-600">
-              Pomoberry
-            </h2>
+          <div className="flex flex-col space-y-5">
+            <div className="flex flex-col">
+              <h2 className="text-[10rem] text-center font-bold text-pink-600">
+                Pomoberry
+              </h2>
 
-            <p className="text-center text-gray-600 italic">
-              {encouragementMessage}
-            </p>
+              <p className="text-center text-gray-600 italic">
+                {encouragementMessage}
+              </p>
+            </div>
+
+            <Pomodoro />
 
             <div className="flex justify-evenly">
               <button className="text-xl hover:cursor-pointer hover:bg-pink-300 py-3 px-3 rounded-lg">
@@ -41,7 +46,7 @@ const Main = () => {
       </div>
     </>
   );
-};
+}
 
 const Container = styled.div`
   position: relative;
