@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { useTimer } from "react-timer-hook";
 
 function MyTimer({ expiryTimestamp }) {
@@ -25,6 +25,8 @@ function MyTimer({ expiryTimestamp }) {
     }
   }
 
+  const [highlight, setHighlight] = useState(null);
+
   return (
     <div>
       <div className="text-[15rem] font-bold text-center text-pink-600">
@@ -33,8 +35,13 @@ function MyTimer({ expiryTimestamp }) {
       </div>
       <div className="flex justify-evenly">
         <button
-          className="hover:cursor-pointer hover:bg-pink-300 py-3 px-3 rounded-lg"
-          onClick={handleStart}
+          className={`cursor-pointer py-3 px-3 rounded-lg ${
+            highlight === "start" ? "bg-pink-300" : "bg-transparent"
+          }`}
+          onClick={() => {
+            handleStart();
+            setHighlight("start");
+          }}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -42,7 +49,7 @@ function MyTimer({ expiryTimestamp }) {
             viewBox="0 0 24 24"
             stroke-width="1.5"
             stroke="currentColor"
-            class="size-6"
+            className="w-6 h-6"
           >
             <path
               stroke-linecap="round"
@@ -52,8 +59,13 @@ function MyTimer({ expiryTimestamp }) {
           </svg>
         </button>
         <button
-          className="hover:cursor-pointer hover:bg-pink-300 py-3 px-3 rounded-lg"
-          onClick={handlePause}
+          className={`cursor-pointer py-3 px-3 rounded-lg ${
+            highlight === "pause" ? "bg-pink-300" : "bg-transparent"
+          }`}
+          onClick={() => {
+            handlePause();
+            setHighlight("pause");
+          }}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -61,7 +73,7 @@ function MyTimer({ expiryTimestamp }) {
             viewBox="0 0 24 24"
             stroke-width="1.5"
             stroke="currentColor"
-            class="size-6"
+            className="w-6 h-6"
           >
             <path
               stroke-linecap="round"
@@ -71,9 +83,10 @@ function MyTimer({ expiryTimestamp }) {
           </svg>
         </button>
         <button
-          className="hover:cursor-pointer hover:bg-pink-300 py-3 px-3 rounded-lg"
+          className="cursor-pointer py-3 px-3 rounded-lg bg-transparent"
           onClick={() => {
             const time = new Date();
+            setHighlight("start");
             time.setSeconds(time.getSeconds() + 300);
             restart(time);
           }}
@@ -84,7 +97,7 @@ function MyTimer({ expiryTimestamp }) {
             viewBox="0 0 24 24"
             stroke-width="1.5"
             stroke="currentColor"
-            class="size-6"
+            className="w-6 h-6"
           >
             <path
               stroke-linecap="round"
