@@ -33,7 +33,7 @@ function MyTimer({ expiryTimestamp }) {
         <span>{String(minutes).padStart(2, "0")}</span>:
         <span>{String(seconds).padStart(2, "0")}</span>
       </div>
-      <div className="flex justify-evenly">
+      <div className="flex justify-evenly bg-white py-3 px-2 rounded-full shadow-lg">
         <button
           className={`cursor-pointer py-3 px-3 rounded-lg ${
             highlight === "start" ? "bg-pink-300" : "bg-transparent"
