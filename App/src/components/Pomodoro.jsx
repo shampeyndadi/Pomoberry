@@ -25,17 +25,17 @@ function MyTimer({ expiryTimestamp }) {
     }
   }
 
-  const [highlight, setHighlight] = useState(null);
+  const [highlight, setHighlight] = useState("start");
 
   return (
     <div>
-      <div className="text-[15rem] font-bold text-center text-pink-600">
+      <div className="text-[15rem] font-bold text-center text-pink-600 hover:cursor-pointer">
         <span>{String(minutes).padStart(2, "0")}</span>:
         <span>{String(seconds).padStart(2, "0")}</span>
       </div>
       <div className="flex justify-evenly bg-white py-3 px-2 rounded-full shadow-lg">
         <button
-          className={`cursor-pointer py-3 px-3 rounded-lg ${
+          className={`cursor-pointer py-3 px-3 rounded-lg hover:bg-pink-300 ${
             highlight === "start" ? "bg-pink-300" : "bg-transparent"
           }`}
           onClick={() => {
@@ -59,7 +59,7 @@ function MyTimer({ expiryTimestamp }) {
           </svg>
         </button>
         <button
-          className={`cursor-pointer py-3 px-3 rounded-lg ${
+          className={`cursor-pointer py-3 px-3 rounded-lg hover:bg-pink-300  ${
             highlight === "pause" ? "bg-pink-300" : "bg-transparent"
           }`}
           onClick={() => {
@@ -83,7 +83,7 @@ function MyTimer({ expiryTimestamp }) {
           </svg>
         </button>
         <button
-          className="cursor-pointer py-3 px-3 rounded-lg bg-transparent"
+          className="cursor-pointer py-3 px-3 rounded-lg bg-transparent hover:bg-pink-300 "
           onClick={() => {
             const time = new Date();
             setHighlight("start");
