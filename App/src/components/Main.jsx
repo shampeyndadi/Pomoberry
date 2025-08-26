@@ -3,6 +3,7 @@ import styled, { createGlobalStyle } from "styled-components";
 import Pomodoro from "./Pomodoro";
 import Break from "./Break";
 import Settings from "./Settings";
+import LongBreak from "./LongBreak";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -23,6 +24,7 @@ function Main() {
 
   const [pomodoroDuration, setPomodoroDuration] = useState(25);
   const [breakDuration, setBreakDuration] = useState(5);
+  const [longBreakDuration, setLongBreakDuration] = useState(15);
 
   const [expiryTimestamp, setExpiryTimeStamp] = useState(() => {
     const time = new Date();
@@ -34,8 +36,10 @@ function Main() {
     const time = new Date();
     if (duration === "Pomodoro") {
       time.setMinutes(time.getMinutes() + pomodoroDuration);
-    } else {
+    } else if (duration === "Break") {
       time.setMinutes(time.getMinutes() + breakDuration);
+    } else if (duration === "LongBreak") {
+      time.setMinutes(time.getMinutes() + longBreakDuration);
     }
     setExpiryTimeStamp(time);
   }
@@ -63,12 +67,15 @@ function Main() {
                 setPomodoroDuration={setPomodoroDuration}
                 breakDuration={breakDuration}
                 setBreakDuration={setBreakDuration}
+                longBreakDuration={longBreakDuration}
+                setLongBreakDuration={setLongBreakDuration}
                 onClose={() => {
                   setShowSettings(false);
                   resetTimer(currentState);
                 }}
               />
             )}
+
             {currentState === "Pomodoro" ? (
               <Pomodoro
                 key={`pomodoro-${expiryTimestamp}`}
@@ -76,12 +83,19 @@ function Main() {
                 setShowSettings={setShowSettings}
                 duration={pomodoroDuration}
               />
-            ) : (
+            ) : currentState === "Break" ? (
               <Break
                 key={`break-${expiryTimestamp}`}
                 expiryTimestamp={expiryTimestamp}
                 setShowSettings={setShowSettings}
                 duration={breakDuration}
+              />
+            ) : (
+              <LongBreak
+                key={`longbreak-${expiryTimestamp}`}
+                expiryTimestamp={expiryTimestamp}
+                setShowSettings={setShowSettings}
+                duration={longBreakDuration}
               />
             )}
 
@@ -109,6 +123,18 @@ function Main() {
                 }`}
               >
                 Break
+              </button>
+              <button
+                onClick={() => {
+                  newState("LongBreak");
+                  setHighlight("long-break");
+                  resetTimer("LongBreak");
+                }}
+                className={`text-xl italic hover:cursor-pointer hover:bg-pink-300 py-3 px-3 rounded-lg ${
+                  highlight === "long-break" ? "bg-pink-300" : "bg-transparent"
+                }`}
+              >
+                Long Break
               </button>
             </div>
           </div>

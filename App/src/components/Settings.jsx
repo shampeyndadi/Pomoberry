@@ -5,6 +5,8 @@ function Settings({
   setPomodoroDuration,
   breakDuration,
   setBreakDuration,
+  longBreakDuration,
+  setLongBreakDuration,
   onClose,
 }) {
   return (
@@ -55,6 +57,18 @@ function Settings({
                 className="border border-gray-300 rounded-lg p-2 w-[9rem]"
                 value={breakDuration}
                 onChange={(e) => setBreakDuration(Number(e.target.value))}
+              />
+            </div>
+
+            <div className="flex flex-col space-y-2">
+              <label className="mr-2 font-bold text-pink-600">Long Break</label>
+              <input
+                type="number"
+                min="1"
+                max="60"
+                className="border border-gray-300 rounded-lg p-2 w-[9rem]"
+                value={longBreakDuration}
+                onChange={(e) => setLongBreakDuration(Number(e.target.value))}
               />
             </div>
           </div>

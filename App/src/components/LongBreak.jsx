@@ -37,7 +37,7 @@ function MyTimer({ expiryTimestamp, setShowSettings, duration }) {
     <div>
       <div
         onClick={() => setShowSettings(true)}
-        className="text-[15rem] font-bold text-center text-pink-400 hover:cursor-pointer"
+        className="text-[15rem] font-bold text-center text-pink-300 hover:cursor-pointer"
       >
         <span>{String(minutes).padStart(2, "0")}</span>:
         <span>{String(seconds).padStart(2, "0")}</span>
@@ -122,7 +122,7 @@ function MyTimer({ expiryTimestamp, setShowSettings, duration }) {
   );
 }
 
-const Break = ({ expiryTimestamp, setShowSettings, duration }) => {
+const LongBreak = ({ expiryTimestamp, setShowSettings, duration }) => {
   return (
     <>
       <div>
@@ -136,4 +136,4 @@ const Break = ({ expiryTimestamp, setShowSettings, duration }) => {
   );
 };
 
-export default Break;
+export default LongBreak;
