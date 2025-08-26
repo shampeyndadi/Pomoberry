@@ -4,7 +4,10 @@ function Settings() {
   return (
     <>
       <div className="fixed inset-0 z-50 bg-red-500/20 flex items-center justify-center">
-        <div className="bg-white p-5 rounded-lg shadow-lg space-y-3">
+        <div
+          onClick={(e) => e.stopPropagation()}
+          className="bg-white p-5 rounded-lg shadow-lg space-y-3"
+        >
           <h1 className="text-center font-bold text-2xl">Settings</h1>
           <div className="flex space-x-2">
             <svg
