@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import Pomodoro from "./Pomodoro";
 import Break from "./Break";
-
+import Settings from "./Settings";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -17,8 +17,10 @@ const GlobalStyle = createGlobalStyle`
 function Main() {
   const encouragementMessage = "Keep going! You're doing great!";
 
-  const [currentState, newState] = useState("Pomodoro") 
+  const [currentState, newState] = useState("Pomodoro");
   const [highlight, setHighlight] = useState("start");
+  const [showSettings, setShowSettings] = useState(false);
+
   return (
     <>
       <div>
@@ -36,19 +38,32 @@ function Main() {
               </p>
             </div>
 
-            {currentState === "Pomodoro" ? <Pomodoro /> : <Break/>}
+            <div onClick={() => setShowSettings(!showSettings)}>
+              {showSettings && <Settings />}
+              {currentState === "Pomodoro" ? <Pomodoro /> : <Break />}
+            </div>
 
             <div className="flex justify-evenly">
-              <button onClick={() => {
-                newState("Pomodoro")
-                setHighlight("start");
-              }} className={`text-xl italic hover:cursor-pointer hover:bg-pink-300 py-3 px-3 rounded-lg ${highlight === "start" ? "bg-pink-300" : "bg-transparent"}`}>
+              <button
+                onClick={() => {
+                  newState("Pomodoro");
+                  setHighlight("start");
+                }}
+                className={`text-xl italic hover:cursor-pointer hover:bg-pink-300 py-3 px-3 rounded-lg ${
+                  highlight === "start" ? "bg-pink-300" : "bg-transparent"
+                }`}
+              >
                 Pomodoro
               </button>
-              <button onClick={() => {
-                newState("Break")
-                setHighlight("break");
-              }} className={`text-xl italic hover:cursor-pointer hover:bg-pink-300 py-3 px-3 rounded-lg ${highlight === "break" ? "bg-pink-300" : "bg-transparent"}`}>
+              <button
+                onClick={() => {
+                  newState("Break");
+                  setHighlight("break");
+                }}
+                className={`text-xl italic hover:cursor-pointer hover:bg-pink-300 py-3 px-3 rounded-lg ${
+                  highlight === "break" ? "bg-pink-300" : "bg-transparent"
+                }`}
+              >
                 Break
               </button>
             </div>

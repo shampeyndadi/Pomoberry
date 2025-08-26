@@ -38,7 +38,8 @@ function MyTimer({ expiryTimestamp }) {
           className={`cursor-pointer py-3 px-3 rounded-lg hover:bg-pink-300 ${
             highlight === "start" ? "bg-pink-300" : "bg-transparent"
           }`}
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation();
             handleStart();
             setHighlight("start");
           }}
@@ -62,7 +63,8 @@ function MyTimer({ expiryTimestamp }) {
           className={`cursor-pointer py-3 px-3 rounded-lg hover:bg-pink-300  ${
             highlight === "pause" ? "bg-pink-300" : "bg-transparent"
           }`}
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation();
             handlePause();
             setHighlight("pause");
           }}
@@ -84,7 +86,8 @@ function MyTimer({ expiryTimestamp }) {
         </button>
         <button
           className="cursor-pointer py-3 px-3 rounded-lg bg-transparent hover:bg-pink-300 "
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation();
             const time = new Date();
             setHighlight("start");
             time.setSeconds(time.getSeconds() + 300);
