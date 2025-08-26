@@ -116,11 +116,11 @@ function MyTimer({ expiryTimestamp }) {
   );
 }
 
-const Pomodoro = () => {
+const Pomodoro = ({ expiryTimestamp }) => {
   return (
     <>
       <div>
-        <MyTimer expiryTimestamp={new Date(Date.now() + 300000)} />
+        <MyTimer expiryTimestamp={expiryTimestamp} />
       </div>
     </>
   );

@@ -1,6 +1,12 @@
 import React from "react";
 
-function Settings() {
+function Settings({
+  pomodoroDuration,
+  setPomodoroDuration,
+  breakDuration,
+  setBreakDuration,
+  onClose,
+}) {
   return (
     <>
       <div className="fixed inset-0 z-50 bg-red-500/20 flex items-center justify-center">
@@ -35,7 +41,8 @@ function Settings() {
                 min="1"
                 max="60"
                 className="border border-gray-300 rounded-lg p-2 w-[9rem]"
-                placeholder="Set timer (min)"
+                value={pomodoroDuration}
+                onChange={(e) => setPomodoroDuration(Number(e.target.value))}
               />
             </div>
 
@@ -46,13 +53,17 @@ function Settings() {
                 min="1"
                 max="60"
                 className="border border-gray-300 rounded-lg p-2 w-[9rem]"
-                placeholder="Set timer (min)"
+                value={breakDuration}
+                onChange={(e) => setBreakDuration(Number(e.target.value))}
               />
             </div>
           </div>
 
           <div className="flex justify-end">
-            <button className="bg-pink-300 text-white rounded-lg p-2 hover:cursor-pointer hover:bg-pink-600">
+            <button
+              onClick={onClose}
+              className="bg-pink-300 text-white rounded-lg p-2 hover:cursor-pointer hover:bg-pink-600"
+            >
               Save & Exit
             </button>
           </div>

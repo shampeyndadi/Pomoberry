@@ -21,6 +21,25 @@ function Main() {
   const [highlight, setHighlight] = useState("start");
   const [showSettings, setShowSettings] = useState(false);
 
+  const [pomodoroDuration, setPomodoroDuration] = useState(25);
+  const [breakDuration, setBreakDuration] = useState(5);
+
+  const [expiryTimestamp, setExpiryTimeStamp] = useState(() => {
+    const time = new Date();
+    time.setMinutes(time.getMinutes() + pomodoroDuration);
+    return time;
+  });
+
+  function resetTimer(duration) {
+    const time = new Date();
+    if (duration === "Pomodoro") {
+      time.setMinutes(time.getMinutes() + pomodoroDuration);
+    } else {
+      time.setMinutes(time.getMinutes() + breakDuration);
+    }
+    setExpiryTimeStamp(time);
+  }
+
   return (
     <>
       <div>
@@ -39,8 +58,23 @@ function Main() {
             </div>
 
             <div onClick={() => setShowSettings(!showSettings)}>
-              {showSettings && <Settings />}
-              {currentState === "Pomodoro" ? <Pomodoro /> : <Break />}
+              {showSettings && (
+                <Settings
+                  pomodoroDuration={pomodoroDuration}
+                  setPomodoroDuration={setPomodoroDuration}
+                  breakDuration={breakDuration}
+                  setBreakDuration={setBreakDuration}
+                  onClose={() => {
+                    setShowSettings(false);
+                    resetTimer(currentState);
+                  }}
+                />
+              )}
+              {currentState === "Pomodoro" ? (
+                <Pomodoro expiryTimestamp={expiryTimestamp} />
+              ) : (
+                <Break expiryTimestamp={expiryTimestamp} />
+              )}
             </div>
 
             <div className="flex justify-evenly">

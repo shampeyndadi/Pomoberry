@@ -114,11 +114,11 @@ function MyTimer({ expiryTimestamp }) {
   );
 }
 
-const Break = () => {
+const Break = ({ expiryTimestamp }) => {
   return (
     <>
       <div>
-        <MyTimer expiryTimestamp={new Date(Date.now() + 300000)} />
+        <MyTimer expiryTimestamp={expiryTimestamp} />
       </div>
     </>
   );
