@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import Pomodoro from "./Pomodoro";
+import Break from "./Break";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -14,6 +15,9 @@ const GlobalStyle = createGlobalStyle`
 
 function Main() {
   const encouragementMessage = "Keep going! You're doing great!";
+
+  const [currentState, newState] = useState("Pomodoro") 
+  const [highlight, setHighlight] = useState("start");
   return (
     <>
       <div>
@@ -31,13 +35,19 @@ function Main() {
               </p>
             </div>
 
-            <Pomodoro />
+            {currentState === "Pomodoro" ? <Pomodoro /> : <Break/>}
 
             <div className="flex justify-evenly">
-              <button className="text-xl hover:cursor-pointer hover:bg-pink-300 py-3 px-3 rounded-lg">
-                Start
+              <button onClick={() => {
+                newState("Pomodoro")
+                setHighlight("start");
+              }} className={`text-xl italic hover:cursor-pointer hover:bg-pink-300 py-3 px-3 rounded-lg ${highlight === "start" ? "bg-pink-300" : "bg-transparent"}`}>
+                Pomodoro
               </button>
-              <button className="text-xl hover:cursor-pointer hover:bg-pink-300 py-3 px-3 rounded-lg">
+              <button onClick={() => {
+                newState("Break")
+                setHighlight("break");
+              }} className={`text-xl italic hover:cursor-pointer hover:bg-pink-300 py-3 px-3 rounded-lg ${highlight === "break" ? "bg-pink-300" : "bg-transparent"}`}>
                 Break
               </button>
             </div>
