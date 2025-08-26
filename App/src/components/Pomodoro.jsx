@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import { useTimer } from "react-timer-hook";
+import Settings from "./Settings";
 
 function MyTimer({ expiryTimestamp }) {
   const remainingRef = useRef(null);
@@ -26,13 +27,18 @@ function MyTimer({ expiryTimestamp }) {
   }
 
   const [highlight, setHighlight] = useState("start");
+  const [showSettings, setShowSettings] = useState(false);
 
   return (
     <div>
-      <div className="text-[15rem] font-bold text-center text-pink-600 hover:cursor-pointer">
+      {showSettings ? <Settings /> : <div onClick={() => {
+        setShowSettings(!showSettings);
+      }}className="text-[15rem] font-bold text-center text-pink-600 hover:cursor-pointer">
         <span>{String(minutes).padStart(2, "0")}</span>:
         <span>{String(seconds).padStart(2, "0")}</span>
-      </div>
+      </div>}
+      
+
       <div className="flex justify-evenly bg-white py-3 px-2 rounded-full shadow-lg">
         <button
           className={`cursor-pointer py-3 px-3 rounded-lg hover:bg-pink-300 ${
