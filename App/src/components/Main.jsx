@@ -57,31 +57,40 @@ function Main() {
               </p>
             </div>
 
-            <div onClick={() => setShowSettings(!showSettings)}>
-              {showSettings && (
-                <Settings
-                  pomodoroDuration={pomodoroDuration}
-                  setPomodoroDuration={setPomodoroDuration}
-                  breakDuration={breakDuration}
-                  setBreakDuration={setBreakDuration}
-                  onClose={() => {
-                    setShowSettings(false);
-                    resetTimer(currentState);
-                  }}
-                />
-              )}
-              {currentState === "Pomodoro" ? (
-                <Pomodoro expiryTimestamp={expiryTimestamp} />
-              ) : (
-                <Break expiryTimestamp={expiryTimestamp} />
-              )}
-            </div>
+            {showSettings && (
+              <Settings
+                pomodoroDuration={pomodoroDuration}
+                setPomodoroDuration={setPomodoroDuration}
+                breakDuration={breakDuration}
+                setBreakDuration={setBreakDuration}
+                onClose={() => {
+                  setShowSettings(false);
+                  resetTimer(currentState);
+                }}
+              />
+            )}
+            {currentState === "Pomodoro" ? (
+              <Pomodoro
+                key={`pomodoro-${expiryTimestamp}`}
+                expiryTimestamp={expiryTimestamp}
+                setShowSettings={setShowSettings}
+                duration={pomodoroDuration}
+              />
+            ) : (
+              <Break
+                key={`break-${expiryTimestamp}`}
+                expiryTimestamp={expiryTimestamp}
+                setShowSettings={setShowSettings}
+                duration={breakDuration}
+              />
+            )}
 
             <div className="flex justify-evenly">
               <button
                 onClick={() => {
                   newState("Pomodoro");
                   setHighlight("start");
+                  resetTimer("Pomodoro");
                 }}
                 className={`text-xl italic hover:cursor-pointer hover:bg-pink-300 py-3 px-3 rounded-lg ${
                   highlight === "start" ? "bg-pink-300" : "bg-transparent"
@@ -93,6 +102,7 @@ function Main() {
                 onClick={() => {
                   newState("Break");
                   setHighlight("break");
+                  resetTimer("Break");
                 }}
                 className={`text-xl italic hover:cursor-pointer hover:bg-pink-300 py-3 px-3 rounded-lg ${
                   highlight === "break" ? "bg-pink-300" : "bg-transparent"

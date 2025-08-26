@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { useTimer } from "react-timer-hook";
 
-function MyTimer({ expiryTimestamp }) {
+function MyTimer({ expiryTimestamp, setShowSettings, duration }) {
   const remainingRef = useRef(null);
   const { seconds, minutes, start, pause, restart } = useTimer({
     expiryTimestamp,
@@ -25,11 +25,20 @@ function MyTimer({ expiryTimestamp }) {
     }
   }
 
+  function handleRewind() {
+    const time = new Date();
+    time.setMinutes(time.getMinutes() + duration);
+    restart(time);
+  }
+
   const [highlight, setHighlight] = useState("start");
 
   return (
     <div>
-      <div className="text-[15rem] font-bold text-center text-pink-300 hover:cursor-pointer">
+      <div
+        onClick={() => setShowSettings(true)}
+        className="text-[15rem] font-bold text-center text-pink-300 hover:cursor-pointer"
+      >
         <span>{String(minutes).padStart(2, "0")}</span>:
         <span>{String(seconds).padStart(2, "0")}</span>
       </div>
@@ -90,8 +99,7 @@ function MyTimer({ expiryTimestamp }) {
             e.stopPropagation();
             const time = new Date();
             setHighlight("start");
-            time.setSeconds(time.getSeconds() + 300);
-            restart(time);
+            handleRewind();
           }}
         >
           <svg
@@ -114,11 +122,14 @@ function MyTimer({ expiryTimestamp }) {
   );
 }
 
-const Break = ({ expiryTimestamp }) => {
+const Break = ({ expiryTimestamp, setShowSettings }) => {
   return (
     <>
       <div>
-        <MyTimer expiryTimestamp={expiryTimestamp} />
+        <MyTimer
+          expiryTimestamp={expiryTimestamp}
+          setShowSettings={setShowSettings}
+        />
       </div>
     </>
   );
