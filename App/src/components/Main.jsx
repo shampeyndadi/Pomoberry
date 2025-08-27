@@ -73,6 +73,9 @@ function Main() {
                   setShowSettings(false);
                   resetTimer(currentState);
                 }}
+                onExit={() => {
+                  setShowSettings(false);
+                }}
               />
             )}
 

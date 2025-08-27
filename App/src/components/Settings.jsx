@@ -20,6 +20,7 @@ function Settings({
   longBreakDuration,
   setLongBreakDuration,
   onClose,
+  onExit,
 }) {
   return (
     <>
@@ -32,7 +33,7 @@ function Settings({
             <div></div>
             <h1 className="text-center font-bold text-2xl">Settings</h1>
 
-            <div>
+            <div onClick={onExit}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
