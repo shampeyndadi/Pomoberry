@@ -19,6 +19,9 @@ function Settings({
   setBreakDuration,
   longBreakDuration,
   setLongBreakDuration,
+  setAutoStartPomodoro,
+  setAutoStartBreak,
+  setAutoStartLongBreak,
   onClose,
   onExit,
 }) {
