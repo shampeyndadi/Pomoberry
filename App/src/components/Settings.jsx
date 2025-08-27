@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 
-const Switch = ({ id }) => {
+const Switch = ({ id, checked, setChecked }) => {
   return (
     <StyledWrapper>
       <div className="check">
-        <input id={id} type="checkbox" />
+        <input id={id} type="checkbox" checked={checked} onChange={() => setChecked((prev) => !prev)} />
         <label htmlFor={id} />
       </div>
     </StyledWrapper>
@@ -22,6 +22,9 @@ function Settings({
   setAutoStartPomodoro,
   setAutoStartBreak,
   setAutoStartLongBreak,
+  autoStartPomodoro,
+  autoStartBreak,
+  autoStartLongBreak,
   onClose,
   onExit,
 }) {
@@ -115,17 +118,17 @@ function Settings({
           <div className="flex flex-col space-y-6">
             <div className="flex items-center justify-between px-3">
               <h1 className="font-bold text-pink-600">Auto Start Pomodoro</h1>
-              <Switch id="auto-start-pomodoro" />
+              <Switch id="auto-start-pomodoro" checked={autoStartPomodoro} setChecked={setAutoStartPomodoro}/>
             </div>
 
             <div className="flex items-center justify-between px-3">
               <h1 className="font-bold text-pink-600">Auto Start Break</h1>
-              <Switch id="auto-start-break" />
+              <Switch id="auto-start-break" checked={autoStartBreak} setChecked={setAutoStartBreak} />
             </div>
 
             <div className="flex items-center justify-between px-3">
               <h1 className="font-bold text-pink-600">Auto Start Long Break</h1>
-              <Switch id="auto-start-long-break" />
+              <Switch id="auto-start-long-break" checked={autoStartLongBreak} setChecked={setAutoStartLongBreak} />
             </div>
           </div>
 

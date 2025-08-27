@@ -1,7 +1,7 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useTimer } from "react-timer-hook";
 
-function MyTimer({ expiryTimestamp, setShowSettings, duration }) {
+function MyTimer({ expiryTimestamp, setShowSettings, duration, autoStartBreak }) {
   const remainingRef = useRef(null);
   const { seconds, minutes, start, pause, restart } = useTimer({
     expiryTimestamp,
@@ -13,6 +13,13 @@ function MyTimer({ expiryTimestamp, setShowSettings, duration }) {
 
     remainingRef.current = minutes * 60 + seconds;
   }
+
+  useEffect(() => {
+    if (!autoStartBreak){
+      pause();
+      setHighlight("pause");
+    }
+  }, []);
 
   function handleStart() {
     if (remainingRef.current) {
@@ -122,7 +129,7 @@ function MyTimer({ expiryTimestamp, setShowSettings, duration }) {
   );
 }
 
-const Break = ({ expiryTimestamp, setShowSettings, duration }) => {
+const Break = ({ expiryTimestamp, setShowSettings, duration, autoStartBreak }) => {
   return (
     <>
       <div>
@@ -130,6 +137,7 @@ const Break = ({ expiryTimestamp, setShowSettings, duration }) => {
           expiryTimestamp={expiryTimestamp}
           setShowSettings={setShowSettings}
           duration={duration}
+          autoStartBreak={autoStartBreak}
         />
       </div>
     </>

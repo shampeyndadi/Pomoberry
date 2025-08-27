@@ -1,17 +1,23 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useTimer } from "react-timer-hook";
 import Settings from "./Settings";
 
-function MyTimer({ expiryTimestamp, setShowSettings, duration }) {
+function MyTimer({ expiryTimestamp, setShowSettings, duration, autoStartPomodoro }) {
   const remainingRef = useRef(null);
   const { seconds, minutes, start, pause, restart } = useTimer({
     expiryTimestamp,
     onExpire: () => console.warn("onExpire called"),
   });
 
+  useEffect(() => {
+    if (!autoStartPomodoro){
+      pause();
+      setHighlight("pause");
+    }
+  }, []);
+
   function handlePause() {
     pause();
-
     remainingRef.current = minutes * 60 + seconds;
   }
 
@@ -101,7 +107,6 @@ function MyTimer({ expiryTimestamp, setShowSettings, duration }) {
           className="cursor-pointer py-3 px-3 rounded-lg bg-transparent hover:bg-pink-300 "
           onClick={(e) => {
             e.stopPropagation();
-            const time = new Date();
             setHighlight("start");
             handleRewind();
           }}
@@ -126,7 +131,7 @@ function MyTimer({ expiryTimestamp, setShowSettings, duration }) {
   );
 }
 
-const Pomodoro = ({ expiryTimestamp, setShowSettings, duration }) => {
+const Pomodoro = ({ expiryTimestamp, setShowSettings, duration, autoStartPomodoro }) => {
   return (
     <>
       <div>
@@ -134,6 +139,7 @@ const Pomodoro = ({ expiryTimestamp, setShowSettings, duration }) => {
           expiryTimestamp={expiryTimestamp}
           setShowSettings={setShowSettings}
           duration={duration}
+          autoStartPomodoro={autoStartPomodoro}
         />
       </div>
     </>

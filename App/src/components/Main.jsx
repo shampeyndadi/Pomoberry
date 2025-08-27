@@ -26,9 +26,9 @@ function Main() {
   const [breakDuration, setBreakDuration] = useState(5);
   const [longBreakDuration, setLongBreakDuration] = useState(15);
 
-  const [autoStartPomodoro, setAutoStartPomodoro] = useState(false);
-  const [autoStartBreak, setAutoStartBreak] = useState(false);
-  const [autoStartLongBreak, setAutoStartLongBreak] = useState(false);
+  const [autoStartPomodoro, setAutoStartPomodoro] = useState(true);
+  const [autoStartBreak, setAutoStartBreak] = useState(true);
+  const [autoStartLongBreak, setAutoStartLongBreak] = useState(true);
 
   const [expiryTimestamp, setExpiryTimeStamp] = useState(() => {
     const time = new Date();
@@ -76,6 +76,9 @@ function Main() {
                 setAutoStartPomodoro={setAutoStartPomodoro}
                 setAutoStartBreak={setAutoStartBreak}
                 setAutoStartLongBreak={setAutoStartLongBreak}
+                autoStartPomodoro={autoStartPomodoro}
+                autoStartBreak={autoStartBreak}
+                autoStartLongBreak={autoStartLongBreak}
                 onClose={() => {
                   setShowSettings(false);
                   resetTimer(currentState);
