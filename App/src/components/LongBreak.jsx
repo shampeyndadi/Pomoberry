@@ -5,6 +5,7 @@ function MyTimer({ expiryTimestamp, setShowSettings, duration, autoStartLongBrea
   const remainingRef = useRef(null);
   const { seconds, minutes, start, pause, restart } = useTimer({
     expiryTimestamp,
+    autoStart: autoStartLongBreak,
     onExpire: () => console.warn("onExpire called"),
   });
 

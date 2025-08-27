@@ -6,6 +6,7 @@ function MyTimer({ expiryTimestamp, setShowSettings, duration, autoStartPomodoro
   const remainingRef = useRef(null);
   const { seconds, minutes, start, pause, restart } = useTimer({
     expiryTimestamp,
+    autoStart: autoStartPomodoro,
     onExpire: () => console.warn("onExpire called"),
   });
 
