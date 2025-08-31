@@ -5,6 +5,7 @@ import Break from "./Break";
 import Settings from "./Settings";
 import LongBreak from "./LongBreak";
 import Navbar from "./Navbar";
+import Todolist from "./Todolist";
 
 const Button = () => {
   return (
@@ -31,7 +32,9 @@ function Main() {
 
   const [currentState, newState] = useState("Pomodoro");
   const [highlight, setHighlight] = useState("start");
+
   const [showSettings, setShowSettings] = useState(false);
+  const [showTodolist, setShowTodoList] = useState(false);
 
   const [pomodoroDuration, setPomodoroDuration] = useState(25);
   const [breakDuration, setBreakDuration] = useState(5);
@@ -64,8 +67,8 @@ function Main() {
       <div>
         <GlobalStyle />
         <Container />
-        <Navbar />
-
+        <Navbar showTodoList={showTodolist} setShowTodoList={setShowTodoList}/>
+        
         <div className="flex items-center justify-center h-[50rem]">
           <div className="flex flex-col space-y-5">
             <div className="flex flex-col">
@@ -73,6 +76,8 @@ function Main() {
                 Pomoberry
               </h2>
             </div>
+
+            {showTodolist && <Todolist />}
 
             {showSettings && (
               <Settings
