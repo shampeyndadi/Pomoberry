@@ -14,10 +14,11 @@ function Todolist(){
                             <input type="text" className="border-b-2 border-gray-200 w-full focus:outline-none focus:border-pink-400" placeholder="Add Task"/>
                             <button className="bg-pink-400 px-5 py-3 w-[5rem] rounded-lg text-white hover:cursor-pointer">Add</button>
                         </div>
-
-                        <div className="flex items-center justify-center border overflow-visible h-[40rem]">
+                        
+                        <div className="flex items-center justify-center h-[38rem]">
                             <Koala/>
                         </div>
+                        
                     </div>                
                 </div>
             </div>

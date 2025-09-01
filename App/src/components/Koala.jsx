@@ -5,6 +5,12 @@ const Koala = () => {
   return (
     <StyledWrapper>
       <div aria-label="Cartoon of a smiling koala" role="img" className="article">
+        <div className="absolute top-3/4 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50">
+            <h1 className="text-[2rem] text-center font-bold text-pink-600 bg-white shadow-md border-pink-500 px-10 py-3 drop-shadow-lg pointer-events-none">
+               No tasks yet!
+            </h1>
+        </div>
+
         <div className="body">
           <div className="shadow" />
           <div className="chest">
@@ -402,7 +408,7 @@ const StyledWrapper = styled.div`
         .mouth {
           width: 14%;
           aspect-ratio: 2.5;
-          border-radius: 50% / 0 0 100% 100%;
+          border-radius: 50% / 100% 100% 0 0; 
           border: 0.5em solid #900;
           border-top: 0;
           top: 83%;
