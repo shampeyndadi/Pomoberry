@@ -69,7 +69,7 @@ function Main() {
         <Container />
         <Navbar showTodoList={showTodolist} setShowTodoList={setShowTodoList}/>
         
-        <div className="flex items-center justify-center h-[50rem]">
+        <div className="flex items-center justify-center h-[47rem]">
           <div className="flex flex-col space-y-5">
             <div className="flex flex-col">
               <h2 className="text-[10rem] text-center font-bold text-pink-600">
