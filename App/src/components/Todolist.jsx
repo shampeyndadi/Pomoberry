@@ -15,7 +15,7 @@ function Todolist(){
                             <button className="bg-pink-400 px-5 py-3 w-[5rem] rounded-lg text-white hover:cursor-pointer">Add</button>
                         </div>
 
-                        <div className="flex items-center w-full h-full justify-center border overflow-visible">
+                        <div className="flex items-center justify-center border overflow-visible h-[40rem]">
                             <Koala/>
                         </div>
                     </div>                

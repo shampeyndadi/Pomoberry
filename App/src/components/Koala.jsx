@@ -21,8 +21,7 @@ const Koala = () => {
             <div className="eye" />
             <div className="eye" />
             <div className="nose" />
-            <div className="cheek" />
-            <div className="cheek" />
+
             <div className="mouth" />
             <div className="hair" />
           </div>
@@ -51,12 +50,10 @@ const StyledWrapper = styled.div`
       radial-gradient(at 45% 40%, #fff6, #fff0 70%);
     position: relative;
     font-size: 1vmin;
-    width: 60em;
+    width: 80em;
     aspect-ratio: 1;
     transform: scale(0.5);
-    transform-origin: center center;
     animation: floating 5s ease-in-out infinite;
-    overflow: visible;
 
     .body {
       width: 63%;
@@ -135,14 +132,11 @@ const StyledWrapper = styled.div`
           filter: drop-shadow(1em 1.5em 1em #8004)
             drop-shadow(1.25em 2em 1.5em #0074);
 
-          & ~ & {
+          &:nth-child(4) {
             scale: -1 1;
             rotate: 12deg;
             left: auto;
             right: 3%;
-            /*           rotate: 15deg;
-            right: 5%; */
-
             box-shadow:
               inset 0 0 5em -2.75em,
               inset 4em 0 4em -2em #0083,
@@ -178,34 +172,10 @@ const StyledWrapper = styled.div`
             /*           radial-gradient(30% 40% at 30% 50%, pink 80%, #0000 0), */
               var(--fur);
 
-          &::before {
-            --s1: 0.75em 0.6em 1.5em -1.25em #3007, 1em 0.5em 1.5em -1em #3007;
-            --s2: inset -1.5em -0.5em 0.35em -0.75em #4002,
-              inset -1.5em 0.5em 0.25em -0.75em #4002;
-            --c1: #e99;
-            content: "";
-            width: 45%;
-            height: 70%;
-            background: pink;
-            top: 50%;
-            left: -4%;
 
-            border-radius: 50%;
-            transform: translate(0%, -50%) rotate(6deg);
-            background: radial-gradient(at 35% 40%, #fff8 10%, #fff0), var(--c1);
-            box-shadow:
-              inset 0 0 0.25em #4008,
-              inset 0.25em 0.1em 0.5em 0.1em #fff8,
-              inset 0.5em 0.25em 0.75em #c002,
-              var(--s2),
-              inset 0 0 1em 0.5em #f553,
-              var(--s1),
-              0.75em 0 0.5em 0.25em #0083,
-              1em 0 0.5em 0.25em #fff4;
-          }
 
           &::after {
-            acontent: "";
+            content: "";
             inset: 0;
             border-radius: 10em 90% 40% 10em;
             box-shadow:
@@ -216,13 +186,10 @@ const StyledWrapper = styled.div`
               inset 1em 1em 3em #fff5;
           }
 
-          & ~ & {
+          &:nth-child(2) {
             left: auto;
             right: 0;
             transform: scaleX(-1) translate(-5%, -10%) rotate(-20deg);
-            clip-path: polygon(0 0, 80% 0, 85% 100%, 0 100%);
-            mask: radial-gradient(47% 80% at 118% 42%, #0000 60%, #000);
-            /*            radial-gradient(25% 160% at 100% 0, #0000 70%, #000) */
             background: radial-gradient(60% 100% at 50% 80%, #0000 40%, #3002),
               radial-gradient(10% 5% at 50% 0, #0001, #0000 80%), var(--dots),
               var(--light), radial-gradient(60% 50% at 30% 50%, #0082 60%, #0000),
@@ -235,13 +202,7 @@ const StyledWrapper = styled.div`
               inset 0 -4em 4em -2em #0083,
               inset 1em 1em 3em #fff5,
               inset 3em 0 4em #0084;
-            &::before {
-              --c1: #d88;
-              --s1: 0.75em 1em 1.5em -1.25em #3007, 1em 0.5em 1.5em -1em #3007;
-              --s2: inset -1.5em -0.5em 0.35em -0.75em #4002,
-                inset -0.5em -1em 0.5em -0.5em #4002;
-              background: radial-gradient(at 35% 40%, #fff6, #fff0), var(--c1);
-            }
+
           }
         }
       }
@@ -310,7 +271,7 @@ const StyledWrapper = styled.div`
             var(--s1);
         }
 
-        & ~ & {
+        &:nth-child(2) {
           left: calc(100% - var(--pos));
 
           &::after {
@@ -331,10 +292,11 @@ const StyledWrapper = styled.div`
             --s2: inset -1.5em -0.5em 0.35em -0.75em #4002,
               inset -0.5em -1em 0.5em -0.5em #4002;
             background: radial-gradient(at 35% 40%, #fff6, #fff0), var(--c1);
-
             border-radius: 50%;
           }
         }
+
+
       }
 
       .face {
@@ -429,7 +391,7 @@ const StyledWrapper = styled.div`
             ),
             radial-gradient(at 40% 40%, #fff4, #fff0 60%), var(--detail);
 
-          & ~ & {
+          &:nth-child(2) {
             --c1: #fff5;
             --p1: 50%;
             --b1: -1.25em -1.5em 0.75em #0000660c, 0.25em -1em 2em 2em #00006608;
@@ -460,37 +422,7 @@ const StyledWrapper = styled.div`
             drop-shadow(-0.1em -0.1em 0.1em #fff);
         }
 
-        .cheek {
-          --pos: 18%;
-          --s1: 0.75em 0.6em 1.5em -1.25em #3007, 1em 0.5em 1.5em -1em #3007;
-          --s2: inset -1.5em -0.5em 0.35em -0.75em #4002,
-            inset -1.5em 0.5em 0.25em -0.75em #4002;
-          --c1: #e99;
-          width: 20%;
-          height: 14%;
-          border-radius: 50% 45% 55% 50%;
-          top: 75%;
-          left: var(--pos);
-          transform: translate(-50%, -50%) rotate(25deg);
-          background: radial-gradient(at 35% 40%, #fff8 10%, #fff0), var(--c1);
-          box-shadow:
-            inset 0 0 0.25em #4008,
-            inset 0.25em 0.1em 0.5em 0.1em #fff8,
-            inset 0.5em 0.25em 0.75em #c002,
-            var(--s2),
-            inset 0 0 1em 0.5em #f553,
-            var(--s1);
 
-          & ~ & {
-            left: calc(100% - var(--pos));
-            transform: translate(-50%, -50%) rotate(-25deg);
-            --c1: #d88;
-            --s1: 0.75em 1em 1.5em -1.25em #3007, 1em 0.5em 1.5em -1em #3007;
-            --s2: inset -1.5em -0.5em 0.35em -0.75em #4002,
-              inset -0.5em -1em 0.5em -0.5em #4002;
-            background: radial-gradient(at 35% 40%, #fff6, #fff0), var(--c1);
-          }
-        }
       }
     }
   }
