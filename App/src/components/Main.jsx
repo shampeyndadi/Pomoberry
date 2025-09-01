@@ -77,7 +77,7 @@ function Main() {
               </h2>
             </div>
 
-            {showTodolist && <Todolist />}
+            {showTodolist && <Todolist showTodoList={showTodolist} setShowTodoList={setShowTodoList} />}
 
             {showSettings && (
               <Settings
