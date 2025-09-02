@@ -18,6 +18,8 @@ function Todolist({ showTodoList, setShowTodoList }) {
   useEffect(() => {
     if (tasks.length > 0) {
       localStorage.setItem("tasks", JSON.stringify(tasks));
+    } else {
+      localStorage.removeItem("tasks");
     }
   }, [tasks]);
 
