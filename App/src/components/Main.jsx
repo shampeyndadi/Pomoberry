@@ -7,26 +7,6 @@ import LongBreak from "./LongBreak";
 import Navbar from "./Navbar";
 import Todolist from "./Todolist";
 
-const Button = () => {
-  return (
-    <StyledWrapper>
-      <button>
-        <svg height={32} width={32} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0H24V24H0z" fill="none" /><path d="M16.5 3C19.538 3 22 5.5 22 9c0 7-7.5 11-10 12.5C9.5 20 2 16 2 9c0-3.5 2.5-6 5.5-6C9.36 3 11 4 12 5c1-1 2.64-2 4.5-2z" /></svg>
-      </button>
-    </StyledWrapper>
-  );
-}
-
-const GlobalStyle = createGlobalStyle`
-  body {
-    margin: 0;
-    padding: 0;
-    height: 100vh;
-    background: linear-gradient(135deg, #ffe8f3, #d9f3ff);
-    overflow: hidden;
-  }
-`;
-
 function Main() {
   const encouragementMessage = "Keep going! You're doing great!";
 
@@ -67,8 +47,8 @@ function Main() {
       <div>
         <GlobalStyle />
         <Container />
-        <Navbar showTodoList={showTodolist} setShowTodoList={setShowTodoList}/>
-        
+        <Navbar showTodoList={showTodolist} setShowTodoList={setShowTodoList} />
+
         <div className="flex items-center justify-center h-[47rem]">
           <div className="flex flex-col space-y-5">
             <div className="flex flex-col">
@@ -77,7 +57,12 @@ function Main() {
               </h2>
             </div>
 
-            {showTodolist && <Todolist showTodoList={showTodolist} setShowTodoList={setShowTodoList} />}
+            {showTodolist && (
+              <Todolist
+                showTodoList={showTodolist}
+                setShowTodoList={setShowTodoList}
+              />
+            )}
 
             {showSettings && (
               <Settings
@@ -186,9 +171,8 @@ const StyledWrapper = styled.div`
     border-style: solid;
     border-width: 9px;
     border-radius: 35px;
-    transition: transform 400ms cubic-bezier(.68,-0.55,.27,2.5), 
-    border-color 400ms ease-in-out,
-    background-color 400ms ease-in-out;
+    transition: transform 400ms cubic-bezier(0.68, -0.55, 0.27, 2.5),
+      border-color 400ms ease-in-out, background-color 400ms ease-in-out;
     word-spacing: -2px;
   }
 
@@ -242,8 +226,8 @@ const StyledWrapper = styled.div`
     transform: scale(105%);
     border-color: #ffd8d8;
     animation: beatingHeart 1.2s infinite;
-  }`;
-
+  }
+`;
 
 const Container = styled.div`
   position: relative;
