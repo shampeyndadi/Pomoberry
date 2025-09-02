@@ -7,6 +7,16 @@ import LongBreak from "./LongBreak";
 import Navbar from "./Navbar";
 import Todolist from "./Todolist";
 
+const GlobalStyle = createGlobalStyle`
+  body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #ffe8f3, #d9f3ff);
+    overflow: hidden;
+  }
+`;
+
 function Main() {
   const encouragementMessage = "Keep going! You're doing great!";
 
