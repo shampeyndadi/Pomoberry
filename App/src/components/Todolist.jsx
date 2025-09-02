@@ -6,6 +6,8 @@ function Todolist({showTodoList, setShowTodoList}){
     const [taskName, setTaskName] = useState("");
     const [taskPriority, setTaskPriority] = useState("urgent");
 
+    const [highlight, setHighlight] = useState("all");
+
     function addTask() {
         if (taskName.trim() !== ""){
             const newTask = {name: taskName, priority: taskPriority};
@@ -25,11 +27,21 @@ function Todolist({showTodoList, setShowTodoList}){
         }else{
             return (
                 <div className="h-[38rem] overflow-y-auto space-y-3">
+                    <div className="flex flex-col space-y-4">
+                        <h2 className="font-bold text-lg text-pink-400">Filter:</h2>
+                        <div className="flex space-x-5">
+                            <button onClick={() => setHighlight("all")} className={`hover:bg-gray-200 px-3 py-1 rounded-lg ${ highlight === "all" ? "bg-gray-200 px-3 py-1 rounded-lg": ""}`}>All</button>
+                            <button onClick={() => setHighlight("urgent")} className={`hover:bg-gray-200 px-3 py-1 rounded-lg ${ highlight === "urgent" ? "bg-gray-200 px-3 py-1 rounded-lg": ""}`}>Urgent</button>
+                            <button onClick={() => setHighlight("priority")} className={`hover:bg-gray-200 px-3 py-1 rounded-lg ${ highlight === "priority" ? "bg-gray-200 px-3 py-1 rounded-lg": ""}`}>Priority</button>
+                            <button onClick={() => setHighlight("low-priority")} className={`hover:bg-gray-200 px-3 py-1 rounded-lg ${ highlight === "low-priority" ? "bg-gray-200 px-3 py-1 rounded-lg": ""}`}>Low Priority</button>
+                        </div>
+                        <hr></hr>
+                    </div>
                     {tasks.map((task, index) => (
                         <div key={index} className={`flex justify-between items-center border-l-4 pl-3 py-2 px-3 ${task.priority === "urgent" ? "border-red-500 bg-red-50" : task.priority === "priority" ? "border-yellow-500 bg-yellow-50" : "border-green-500 bg-green-50"}`}>
                             <span className="font-medium">{task.name}</span>
                             <div className="flex items-center space-x-3">
-                                <span className={`text-sm px-2 py-2 rounded-full ${task.priority === "urgent" ? "bg-red-200 text-red-800 px-3" : task.priority === "priority" ? "bg-yellow-200 text-yellow-800" : "bg-green-200 text-green-800"}`}>{task.priority.replace("-", " ")}</span>
+                                <span className={`text-sm px-2 py-2 rounded-full ${task.priority === "urgent" ? "bg-red-200 text-red-800 px-3" : task.priority === "priority" ? "bg-yellow-200 text-yellow-800 px-3" : "bg-green-200 text-green-800 px-3"}`}>{task.priority.replace("-", " ")}</span>
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     fill="none"
