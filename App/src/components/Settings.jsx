@@ -30,7 +30,7 @@ function Settings({
 }) {
   return (
     <>
-      <div className="fixed inset-0 z-50 bg-red-500/20 flex items-center justify-center">
+      <div className="fixed top-0 left-0 right-0 bottom-0 w-full h-full z-[9999] bg-red-500/20 flex items-center justify-center" style={{margin: 0, padding: 0}}>
         <div
           onClick={(e) => e.stopPropagation()}
           className="bg-white p-5 rounded-lg shadow-lg space-y-3"
