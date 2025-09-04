@@ -3,7 +3,7 @@ import React from 'react';
 function Navbar({showTodolist, setShowTodoList}){
     return(
         <>
-        <div className="w-full flex items-center justify-center px-6 py-8 rounded-b-full shadow-md">
+        <div className="w-full flex items-center justify-center px-6 py-8 shadow-md">
           <div className="flex items-center justify-between w-[80rem]">
             <h1 className="text-4xl font-bold text-pink-600 ">Pomoberry</h1>
             

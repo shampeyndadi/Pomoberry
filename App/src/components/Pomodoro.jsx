@@ -4,10 +4,42 @@ import Settings from "./Settings";
 
 function MyTimer({ expiryTimestamp, setShowSettings, duration, autoStartPomodoro }) {
   const remainingRef = useRef(null);
+  const audioRef = useRef(null);
+
+  useEffect(() => {
+    audioRef.current = new Audio("sounds/Alarm.mp3");
+    audioRef.current.preload = "auto";
+    audioRef.current.volume = 0.9;
+    audioRef.current.loop = true;
+  }, []) 
+
+  function playAlarm(){
+    if (audioRef.current){
+      try{
+        audioRef.current.currentTime = 0;
+        audioRef.current.play();
+      }catch(e){
+        console.warn("Error playing audio:", e);
+      }
+    }
+  }
+
+  function stopAlarm(){
+    if (audioRef.current){
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    }
+  }
+
   const { seconds, minutes, start, pause, restart } = useTimer({
     expiryTimestamp,
     autoStart: autoStartPomodoro,
-    onExpire: () => console.warn("onExpire called"),
+    onExpire: () => {
+                    console.warn("onExpire called"); 
+                    playAlarm();
+                    setHighlight("pause");
+                    document.addEventListener("click", stopAlarm, {once: true});
+                  },
   });
 
   useEffect(() => {
@@ -62,6 +94,7 @@ function MyTimer({ expiryTimestamp, setShowSettings, duration, autoStartPomodoro
             e.stopPropagation();
             handleStart();
             setHighlight("start");
+            stopAlarm();
           }}
         >
           <svg
@@ -87,6 +120,7 @@ function MyTimer({ expiryTimestamp, setShowSettings, duration, autoStartPomodoro
             e.stopPropagation();
             handlePause();
             setHighlight("pause");
+            stopAlarm();
           }}
         >
           <svg
@@ -110,6 +144,7 @@ function MyTimer({ expiryTimestamp, setShowSettings, duration, autoStartPomodoro
             e.stopPropagation();
             setHighlight("start");
             handleRewind();
+            stopAlarm();
           }}
         >
           <svg
