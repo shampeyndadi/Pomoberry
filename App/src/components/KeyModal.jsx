@@ -176,7 +176,11 @@ function KeyModal({ setShowKeyModal }) {
               <h1 className="font-bold text-pink-600 text-2xl">
                 Generate a PomoKey
               </h1>
-              <div>
+              <div
+                onClick={() => {
+                  setShowKeyModal(false);
+                }}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
