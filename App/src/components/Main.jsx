@@ -6,6 +6,7 @@ import Settings from "./Settings";
 import LongBreak from "./LongBreak";
 import Navbar from "./Navbar";
 import Todolist from "./Todolist";
+import KeyModal from "./KeyModal";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -25,6 +26,7 @@ function Main() {
 
   const [showSettings, setShowSettings] = useState(false);
   const [showTodolist, setShowTodoList] = useState(false);
+  const [showKeyModal, setShowKeyModal] = useState(false);
 
   const [pomodoroDuration, setPomodoroDuration] = useState(25);
   const [breakDuration, setBreakDuration] = useState(5);
@@ -73,6 +75,8 @@ function Main() {
                 setShowTodoList={setShowTodoList}
               />
             )}
+
+            {showKeyModal && <KeyModal setShowKeyModal={setShowKeyModal} />}
 
             {showSettings && (
               <Settings
@@ -162,6 +166,17 @@ function Main() {
                 Long Break
               </button>
             </div>
+          </div>
+        </div>
+
+        <div className="flex mt-4 px-6">
+          <div
+            className="border rounded-lg px-3 py-4 text-black border-black hover:cursor-pointer hover:border-pink-600 hover:text-pink-600"
+            onClick={() => {
+              setShowKeyModal(true);
+            }}
+          >
+            Guest View
           </div>
         </div>
       </div>
