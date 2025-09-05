@@ -10,6 +10,15 @@ const PORT = 3000;
 
 require("dotenv").config();
 
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false }, // Set to true if using HTTPS
+  })
+);
+
 app.listen(PORT, () => {
   console.log("Listening to port 3000");
 });
