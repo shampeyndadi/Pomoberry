@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
+import CreateAccount from "../services/CreateAccount";
 
 const Switch = ({ checked, setChecked }) => {
   return (
@@ -125,6 +126,16 @@ function KeyModal({ setShowKeyModal }) {
   const [checked, setChecked] = useState("enter");
   const [pomokey, setPomokey] = useState("");
 
+  const createAccount = async () => {
+    try {
+      const response = await CreateAccount.createAccount(pomokey);
+      console.log(response);
+      generatePomokey();
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   useEffect(() => {
     const storedKey = localStorage.getItem("pomoKey");
     if (storedKey) {
@@ -195,7 +206,12 @@ function KeyModal({ setShowKeyModal }) {
               className="border-2 border-pink-300 rounded-md px-3 py-2 focus:outline-pink-300"
               placeholder="Enter your key here..."
             />
-            <button className="bg-pink-300 text-white px-3 py-2 rounded-md ml-3 hover:bg-pink-400">
+            <button
+              onClick={() => {
+                createAccount(pomokey);
+              }}
+              className="bg-pink-300 text-white px-3 py-2 rounded-md ml-3 hover:bg-pink-400"
+            >
               Submit
             </button>
           </div>
