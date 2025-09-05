@@ -4,6 +4,8 @@ const cors = require("cors");
 const session = require("express-session");
 const bodyParser = require("body-parser");
 
+const Account = require("./models/Account");
+
 const app = express();
 
 const PORT = 3000;
@@ -19,12 +21,36 @@ app.use(
   })
 );
 
+app.use(cors());
+
+app.use(express.json());
+
 app.listen(PORT, () => {
   console.log("Listening to port 3000");
 });
 
 app.get("/", (req, res) => {
   res.send("Backend is running");
+});
+
+app.post("/api/account", async (req, res) => {
+  try {
+    const { pomokey } = req.body;
+
+    if (!pomokey) {
+      return res.status(400).send("Pomokey is required");
+    }
+
+    const newAccount = await Account.create({ pomokey });
+
+    if (!newAccount) {
+      return res.status(500).send("Error creating account");
+    }
+
+    res.status(201).send("Account created");
+  } catch (err) {
+    res.status(500).send("Server error");
+  }
 });
 
 mongoose
