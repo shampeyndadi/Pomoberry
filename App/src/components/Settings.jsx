@@ -5,7 +5,12 @@ const Switch = ({ id, checked, setChecked }) => {
   return (
     <StyledWrapper>
       <div className="check">
-        <input id={id} type="checkbox" checked={checked} onChange={() => setChecked((prev) => !prev)} />
+        <input
+          id={id}
+          type="checkbox"
+          checked={checked}
+          onChange={() => setChecked((prev) => !prev)}
+        />
         <label htmlFor={id} />
       </div>
     </StyledWrapper>
@@ -25,12 +30,16 @@ function Settings({
   autoStartPomodoro,
   autoStartBreak,
   autoStartLongBreak,
+  account,
   onClose,
   onExit,
 }) {
   return (
     <>
-      <div className="fixed top-0 left-0 right-0 bottom-0 w-full h-full z-[9999] bg-red-500/20 flex items-center justify-center" style={{margin: 0, padding: 0}}>
+      <div
+        className="fixed top-0 left-0 right-0 bottom-0 w-full h-full z-[9999] bg-red-500/20 flex items-center justify-center"
+        style={{ margin: 0, padding: 0 }}
+      >
         <div
           onClick={(e) => e.stopPropagation()}
           className="bg-white p-5 rounded-lg shadow-lg space-y-3"
@@ -118,19 +127,38 @@ function Settings({
           <div className="flex flex-col space-y-6">
             <div className="flex items-center justify-between px-3">
               <h1 className="font-bold text-pink-600">Auto Start Pomodoro</h1>
-              <Switch id="auto-start-pomodoro" checked={autoStartPomodoro} setChecked={setAutoStartPomodoro}/>
+              <Switch
+                id="auto-start-pomodoro"
+                checked={autoStartPomodoro}
+                setChecked={setAutoStartPomodoro}
+              />
             </div>
 
             <div className="flex items-center justify-between px-3">
               <h1 className="font-bold text-pink-600">Auto Start Break</h1>
-              <Switch id="auto-start-break" checked={autoStartBreak} setChecked={setAutoStartBreak} />
+              <Switch
+                id="auto-start-break"
+                checked={autoStartBreak}
+                setChecked={setAutoStartBreak}
+              />
             </div>
 
             <div className="flex items-center justify-between px-3">
               <h1 className="font-bold text-pink-600">Auto Start Long Break</h1>
-              <Switch id="auto-start-long-break" checked={autoStartLongBreak} setChecked={setAutoStartLongBreak} />
+              <Switch
+                id="auto-start-long-break"
+                checked={autoStartLongBreak}
+                setChecked={setAutoStartLongBreak}
+              />
             </div>
           </div>
+
+          {account !== null && (
+            <div className="flex items-center justify-between px-3">
+              <h1 className="font-bold text-pink-600">Account</h1>
+              <p>{account.pomokey}</p>
+            </div>
+          )}
 
           <div className="flex justify-end">
             <button

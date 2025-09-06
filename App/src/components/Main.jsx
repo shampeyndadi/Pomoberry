@@ -28,6 +28,8 @@ function Main() {
   const [showTodolist, setShowTodoList] = useState(false);
   const [showKeyModal, setShowKeyModal] = useState(false);
 
+  const [account, setAccount] = useState(null);
+
   const [pomodoroDuration, setPomodoroDuration] = useState(25);
   const [breakDuration, setBreakDuration] = useState(5);
   const [longBreakDuration, setLongBreakDuration] = useState(15);
@@ -76,7 +78,12 @@ function Main() {
               />
             )}
 
-            {showKeyModal && <KeyModal setShowKeyModal={setShowKeyModal} />}
+            {showKeyModal && (
+              <KeyModal
+                setShowKeyModal={setShowKeyModal}
+                setAccount={setAccount}
+              />
+            )}
 
             {showSettings && (
               <Settings
@@ -170,14 +177,25 @@ function Main() {
         </div>
 
         <div className="flex mt-4 px-6">
-          <div
-            className="border rounded-lg px-3 py-4 text-black border-black hover:cursor-pointer hover:border-pink-600 hover:text-pink-600"
-            onClick={() => {
-              setShowKeyModal(true);
-            }}
-          >
-            Guest View
-          </div>
+          {!account ? (
+            <div
+              className="border rounded-lg px-3 py-4 text-black border-black hover:cursor-pointer hover:border-pink-600 hover:text-pink-600"
+              onClick={() => {
+                setShowKeyModal(true);
+              }}
+            >
+              Guest
+            </div>
+          ) : (
+            <div
+              className="rounded-lg px-3 py-4 text-black text-3xl font-bold hover:cursor-pointer hover:border-pink-600 hover:text-pink-600"
+              onClick={() => {
+                setShowKeyModal(true);
+              }}
+            >
+              {account.pomokey}
+            </div>
+          )}
         </div>
       </div>
     </>

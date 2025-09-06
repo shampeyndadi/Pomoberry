@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import CreateAccount from "../services/CreateAccount";
+import GetAccount from "../services/GetAccount";
 
 const Switch = ({ checked, setChecked }) => {
   return (
@@ -122,15 +123,31 @@ const StyledWrapper = styled.div`
   }
 `;
 
-function KeyModal({ setShowKeyModal }) {
+function KeyModal({ setShowKeyModal, setAccount }) {
   const [checked, setChecked] = useState("enter");
   const [pomokey, setPomokey] = useState("");
 
   const createAccount = async () => {
     try {
       const response = await CreateAccount.createAccount(pomokey);
-      console.log(response);
+      setAccount(response.data);
+
+      localStorage.setItem("pomoKey", pomokey);
+
       generatePomokey();
+      setShowKeyModal(false);
+    } catch (err) {
+      if (err.response && err.response.status === 500) {
+        await fetchAccount();
+        setShowKeyModal(false);
+      }
+    }
+  };
+
+  const fetchAccount = async () => {
+    try {
+      const response = await GetAccount.getAccount(pomokey);
+      setAccount(response.data);
     } catch (err) {
       console.error(err);
     }
@@ -203,6 +220,7 @@ function KeyModal({ setShowKeyModal }) {
           <div className="flex">
             <input
               type="text"
+              onChange={(e) => setPomokey(e.target.value)}
               className="border-2 border-pink-300 rounded-md px-3 py-2 focus:outline-pink-300"
               placeholder="Enter your key here..."
             />
