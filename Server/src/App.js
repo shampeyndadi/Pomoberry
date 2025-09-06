@@ -84,6 +84,21 @@ app.get("/api/account/:pomokey", async (req, res) => {
   }
 });
 
+app.post("/api/account/logout", async (req, res) => {
+  try {
+    req.session.destroy((err) => {
+      if (err) {
+        return res.status(500).send("logout failed");
+      }
+
+      res.clearCookie("connect.sid");
+      res.status(200).send({ message: "logout successful" });
+    });
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
