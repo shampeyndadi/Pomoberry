@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 const Switch = ({ id, checked, setChecked }) => {
@@ -30,9 +30,69 @@ function Settings({
   autoStartPomodoro,
   autoStartBreak,
   autoStartLongBreak,
+  account,
   onClose,
   onExit,
 }) {
+  const [audioFile, setAudioFile] = useState(null);
+  const [editAudioFile, setEditAudioFile] = useState(null);
+
+  function displayEditAudio({ id }) {
+    if (editAudioFile !== id) {
+      return (
+        <div className="flex space-x-2 items-center">
+          <h1 className="border bg-gray-200 px-3 py-1 rounded-lg">
+            Placeholder.mp3
+          </h1>
+
+          <div id={id} onClick={() => setEditAudioFile(id)}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6 hover:cursor-pointer"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125"
+              />
+            </svg>
+          </div>
+        </div>
+      );
+    } else {
+      return (
+        <div className="flex space-x-2 items-center">
+          <input
+            type="file"
+            accept="audio/*"
+            className="border border-gray-300 rounded-lg w-[15rem]"
+          />
+
+          <div id={id} onClick={() => setEditAudioFile(null)}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-6 h-6 hover:cursor-pointer"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M6 18 18 6M6 6l12 12"
+              />
+            </svg>
+          </div>
+        </div>
+      );
+    }
+  }
+
   return (
     <>
       <div
@@ -151,6 +211,48 @@ function Settings({
               />
             </div>
           </div>
+
+          {account && (
+            <div className="flex flex-col space-y-3">
+              <hr></hr>
+              <div className="flex justify-between mt-3">
+                <div className="flex space-x-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-6 h-6"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M19.114 5.636a9 9 0 0 1 0 12.728M16.463 8.288a5.25 5.25 0 0 1 0 7.424M6.75 8.25l4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.009 9.009 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z"
+                    />
+                  </svg>
+                  <p>Sounds</p>
+                </div>
+              </div>
+
+              <div className="flex flex-col space-y-6">
+                <div className="flex items-center justify-between px-3">
+                  <h1 className="font-bold text-pink-600">Pomodoro Alarm</h1>
+                  {displayEditAudio({ id: "pomodoro" })}
+                </div>
+
+                <div className="flex items-center justify-between px-3">
+                  <h1 className="font-bold text-pink-600">Break Alarm</h1>
+                  {displayEditAudio({ id: "break" })}
+                </div>
+
+                <div className="flex items-center justify-between px-3">
+                  <h1 className="font-bold text-pink-600">Long Break Alarm</h1>
+                  {displayEditAudio({ id: "long-break" })}
+                </div>
+              </div>
+            </div>
+          )}
 
           <div className="flex justify-end">
             <button

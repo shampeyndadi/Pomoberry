@@ -148,6 +148,7 @@ function Main() {
                 autoStartPomodoro={autoStartPomodoro}
                 autoStartBreak={autoStartBreak}
                 autoStartLongBreak={autoStartLongBreak}
+                account={account}
                 onClose={() => {
                   setShowSettings(false);
                   resetTimer(currentState);
