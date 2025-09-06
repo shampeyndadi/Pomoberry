@@ -5,6 +5,8 @@ const session = require("express-session");
 const bodyParser = require("body-parser");
 
 const Account = require("../models/Account");
+const Note = require("../models/Note");
+const Recording = require("../models/Recordings");
 
 const app = express();
 
@@ -40,8 +42,6 @@ app.get("/", (req, res) => {
 
 app.post("/api/account", async (req, res) => {
   try {
-    console.log(req.body);
-
     const { pomokey } = req.body;
 
     if (!pomokey) {
@@ -49,6 +49,14 @@ app.post("/api/account", async (req, res) => {
     }
 
     const newAccount = await Account.create({ pomokey });
+
+    const recording = await Recording.create({
+      file: "Alarm.mp3",
+      duration: 0,
+    });
+
+    newAccount.recordings.push(recording._id);
+    await newAccount.save();
 
     if (!newAccount) {
       return res.status(500).send("Error creating account");
