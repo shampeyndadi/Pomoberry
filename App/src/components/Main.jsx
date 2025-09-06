@@ -27,6 +27,7 @@ function Main() {
   const [showSettings, setShowSettings] = useState(false);
   const [showTodolist, setShowTodoList] = useState(false);
   const [showKeyModal, setShowKeyModal] = useState(false);
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
 
   const [account, setAccount] = useState(null);
 
@@ -54,6 +55,34 @@ function Main() {
       time.setMinutes(time.getMinutes() + longBreakDuration);
     }
     setExpiryTimeStamp(time);
+  }
+
+  function confirmationModal() {
+    return (
+      <div className="fixed top-0 left-0 right-0 bottom-0 w-full h-full z-[9999] bg-red-500/20 flex items-center justify-center">
+        <div className="bg-white py-5 px-5 rounded-lg shadow">
+          <div className="flex flex-col items-center space-y-7 px-5 py-5">
+            <h1 className="font-bold text-center text-xl text-pink-600">
+              Are you sure you want to go back to guest view?
+            </h1>
+
+            <div className="flex space-x-3">
+              <button className="bg-green-300 px-3 py-3 font-bold text-lg rounded-lg hover:bg-green-500">
+                Yes
+              </button>
+              <button
+                onClick={() => {
+                  setShowConfirmationModal(false);
+                }}
+                className="bg-red-300 px-3 py-3 font-bold text-lg rounded-lg hover:bg-red-500"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -84,6 +113,8 @@ function Main() {
                 setAccount={setAccount}
               />
             )}
+
+            {showConfirmationModal && confirmationModal()}
 
             {showSettings && (
               <Settings
@@ -190,7 +221,7 @@ function Main() {
             <div
               className="rounded-lg px-3 py-4 text-pink-400 text-3xl font-bold hover:cursor-pointer hover:border-pink-600 hover:text-pink-600"
               onClick={() => {
-                setShowKeyModal(true);
+                setShowConfirmationModal(true);
               }}
             >
               {account.pomokey}
