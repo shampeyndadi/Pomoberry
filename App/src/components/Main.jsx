@@ -8,6 +8,8 @@ import Navbar from "./Navbar";
 import Todolist from "./Todolist";
 import KeyModal from "./KeyModal";
 
+import LogoutAccount from "../services/LogoutAccount";
+
 const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
@@ -39,6 +41,17 @@ function Main() {
   const [autoStartBreak, setAutoStartBreak] = useState(true);
   const [autoStartLongBreak, setAutoStartLongBreak] = useState(true);
 
+  const logout = async () => {
+    try {
+      const response = await LogoutAccount.logoutAccount();
+      console.log("Logout response:", response);
+      setAccount(null);
+      setShowConfirmationModal(false);
+    } catch (error) {
+      console.error("Error during logout:", error);
+    }
+  };
+
   const [expiryTimestamp, setExpiryTimeStamp] = useState(() => {
     const time = new Date();
     time.setMinutes(time.getMinutes() + pomodoroDuration);
@@ -67,7 +80,12 @@ function Main() {
             </h1>
 
             <div className="flex space-x-3">
-              <button className="bg-green-300 px-3 py-3 font-bold text-lg rounded-lg hover:bg-green-500">
+              <button
+                onClick={() => {
+                  logout();
+                }}
+                className="bg-green-300 px-3 py-3 font-bold text-lg rounded-lg hover:bg-green-500"
+              >
                 Yes
               </button>
               <button
