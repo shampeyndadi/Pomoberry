@@ -2,7 +2,12 @@ import React, { useRef, useState, useEffect } from "react";
 import { useTimer } from "react-timer-hook";
 import Settings from "./Settings";
 
-function MyTimer({ expiryTimestamp, setShowSettings, duration, autoStartPomodoro }) {
+function MyTimer({
+  expiryTimestamp,
+  setShowSettings,
+  duration,
+  autoStartPomodoro,
+}) {
   const remainingRef = useRef(null);
   const audioRef = useRef(null);
 
@@ -11,21 +16,21 @@ function MyTimer({ expiryTimestamp, setShowSettings, duration, autoStartPomodoro
     audioRef.current.preload = "auto";
     audioRef.current.volume = 0.9;
     audioRef.current.loop = true;
-  }, []) 
+  }, []);
 
-  function playAlarm(){
-    if (audioRef.current){
-      try{
+  function playAlarm() {
+    if (audioRef.current) {
+      try {
         audioRef.current.currentTime = 0;
         audioRef.current.play();
-      }catch(e){
+      } catch (e) {
         console.warn("Error playing audio:", e);
       }
     }
   }
 
-  function stopAlarm(){
-    if (audioRef.current){
+  function stopAlarm() {
+    if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
     }
@@ -35,15 +40,15 @@ function MyTimer({ expiryTimestamp, setShowSettings, duration, autoStartPomodoro
     expiryTimestamp,
     autoStart: autoStartPomodoro,
     onExpire: () => {
-                    console.warn("onExpire called"); 
-                    playAlarm();
-                    setHighlight("pause");
-                    document.addEventListener("click", stopAlarm, {once: true});
-                  },
+      console.warn("onExpire called");
+      playAlarm();
+      setHighlight("pause");
+      document.addEventListener("click", stopAlarm, { once: true });
+    },
   });
 
   useEffect(() => {
-    if (!autoStartPomodoro){
+    if (!autoStartPomodoro) {
       pause();
       setHighlight("pause");
     }
@@ -167,7 +172,12 @@ function MyTimer({ expiryTimestamp, setShowSettings, duration, autoStartPomodoro
   );
 }
 
-const Pomodoro = ({ expiryTimestamp, setShowSettings, duration, autoStartPomodoro }) => {
+const Pomodoro = ({
+  expiryTimestamp,
+  setShowSettings,
+  duration,
+  autoStartPomodoro,
+}) => {
   return (
     <>
       <div>

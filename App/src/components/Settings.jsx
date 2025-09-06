@@ -30,7 +30,6 @@ function Settings({
   autoStartPomodoro,
   autoStartBreak,
   autoStartLongBreak,
-  account,
   onClose,
   onExit,
 }) {
@@ -152,13 +151,6 @@ function Settings({
               />
             </div>
           </div>
-
-          {account !== null && (
-            <div className="flex items-center justify-between px-3">
-              <h1 className="font-bold text-pink-600">Account</h1>
-              <p>{account.pomokey}</p>
-            </div>
-          )}
 
           <div className="flex justify-end">
             <button

@@ -188,7 +188,7 @@ function Main() {
             </div>
           ) : (
             <div
-              className="rounded-lg px-3 py-4 text-black text-3xl font-bold hover:cursor-pointer hover:border-pink-600 hover:text-pink-600"
+              className="rounded-lg px-3 py-4 text-pink-400 text-3xl font-bold hover:cursor-pointer hover:border-pink-600 hover:text-pink-600"
               onClick={() => {
                 setShowKeyModal(true);
               }}
