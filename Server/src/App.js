@@ -62,9 +62,25 @@ app.post("/api/account", async (req, res) => {
       return res.status(500).send("Error creating account");
     }
 
-    res.status(201).send("Account created");
+    res.status(201).send(newAccount);
   } catch (err) {
     res.status(500).send("Server error");
+  }
+});
+
+app.get("/api/account/:pomokey", async (req, res) => {
+  try {
+    const { pomokey } = req.params;
+
+    const account = await Account.findOne({ pomokey });
+
+    if (!account) {
+      return res.status(404).send("Account not found");
+    }
+
+    res.status(200).send(account);
+  } catch (err) {
+    res.status(500).send(err);
   }
 });
 
