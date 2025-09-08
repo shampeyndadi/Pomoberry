@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import UploadAudioRecording from "../services/UploadAudioRecording";
 
 const Switch = ({ id, checked, setChecked }) => {
   return (
@@ -30,19 +31,62 @@ function Settings({
   autoStartPomodoro,
   autoStartBreak,
   autoStartLongBreak,
+  setAccount,
   account,
   onClose,
   onExit,
 }) {
-  const [audioFile, setAudioFile] = useState(null);
+  const getRecordingTitleByType = (id) => {
+    if (!account || !Array.isArray(account.recordings)) return "Default Alarm";
+
+    const matches = account.recordings.filter(
+      (r) => r.type === id || (id === "long-break" && r.type === "longBreak")
+    );
+    const latest = matches[matches.length - 1];
+    return latest?.title || "Default Alarm";
+  };
+  const [audioFile, setAudioFile] = useState({
+    pomodoro: null,
+    break: null,
+    "long-break": null,
+  });
   const [editAudioFile, setEditAudioFile] = useState(null);
+
+  const uploadAudio = async (id) => {
+    const file = audioFile[id];
+    if (!file) return;
+
+    try {
+      const response = await UploadAudioRecording.uploadAudioRecording(
+        account.pomokey,
+        file,
+        id
+      );
+
+      setAccount((prev) => ({
+        ...prev,
+        recordings: [
+          ...prev.recordings.filter((r) => r.type !== id),
+          response.data,
+        ],
+      }));
+
+      setAudioFile((prev) => ({
+        ...prev,
+        [id]: null,
+      }));
+      setEditAudioFile(null);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   function displayEditAudio({ id }) {
     if (editAudioFile !== id) {
       return (
         <div className="flex space-x-2 items-center">
           <h1 className="border bg-gray-200 px-3 py-1 rounded-lg">
-            Placeholder.mp3
+            {getRecordingTitleByType(id)}
           </h1>
 
           <div id={id} onClick={() => setEditAudioFile(id)}>
@@ -70,24 +114,49 @@ function Settings({
             type="file"
             accept="audio/*"
             className="border border-gray-300 rounded-lg w-[15rem]"
+            onChange={(e) => {
+              setAudioFile((prev) => ({
+                ...prev,
+                [id]: e.target.files[0],
+              }));
+            }}
           />
 
-          <div id={id} onClick={() => setEditAudioFile(null)}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6 hover:cursor-pointer"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M6 18 18 6M6 6l12 12"
-              />
-            </svg>
-          </div>
+          {audioFile[id] ? (
+            <div onClick={() => uploadAudio(id)}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="w-6 h-6 hover:cursor-pointer"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="m4.5 12.75 6 6 9-13.5"
+                />
+              </svg>
+            </div>
+          ) : (
+            <div id={id} onClick={() => setEditAudioFile(null)}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6 hover:cursor-pointer"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 18 18 6M6 6l12 12"
+                />
+              </svg>
+            </div>
+          )}
         </div>
       );
     }
@@ -256,7 +325,9 @@ function Settings({
 
           <div className="flex justify-end">
             <button
-              onClick={onClose}
+              onClick={() => {
+                onClose();
+              }}
               className="bg-pink-300 text-white rounded-lg p-2 hover:cursor-pointer hover:bg-pink-600"
             >
               Save & Exit
