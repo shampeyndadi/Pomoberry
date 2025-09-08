@@ -4,6 +4,25 @@ const cors = require("cors");
 const session = require("express-session");
 const bodyParser = require("body-parser");
 
+const multer = require("multer");
+const path = require("path");
+const fs = require("fs");
+
+const uploadDir = path.join(__dirname, "uploads", "recordings");
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, uploadDir);
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    const ext = path.extname(file.originalname);
+    cb(null, file.fieldname + "-" + uniqueSuffix + ext);
+  },
+});
+
+const upload = multer({ storage });
+
 const Account = require("../models/Account");
 const Note = require("../models/Note");
 const Recording = require("../models/Recordings");
@@ -98,6 +117,38 @@ app.post("/api/account/logout", async (req, res) => {
     res.status(500).send(err);
   }
 });
+
+app.post(
+  "/api/recording/upload/:pomokey",
+  upload.single("recording"),
+  async (req, res) => {
+    try {
+      const { pomokey } = req.params;
+
+      const account = await Account.findOne({ pomokey });
+
+      if (!account) {
+        return res.status(404).send("Account not found");
+      }
+      if (!req.file) {
+        return res.status(400).send("No file uploaded");
+      }
+
+      const newRecording = await Recording.create({
+        title: req.file.originalname,
+        fileUrl: `/uploads/recordings/${req.file.filename}`,
+        duration: 0,
+      });
+
+      account.recordings.push(newRecording._id);
+      await account.save();
+
+      res.status(201).send(newRecording);
+    } catch (err) {
+      res.status(500).send(err);
+    }
+  }
+);
 
 mongoose
   .connect(process.env.MONGO_URI)
