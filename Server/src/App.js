@@ -10,6 +10,8 @@ const fs = require("fs");
 
 const uploadDir = path.join(__dirname, "uploads", "recordings");
 
+fs.mkdirSync(uploadDir, { recursive: true });
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, uploadDir);
@@ -70,8 +72,10 @@ app.post("/api/account", async (req, res) => {
     const newAccount = await Account.create({ pomokey });
 
     const recording = await Recording.create({
-      file: "Alarm.mp3",
+      title: "Default Alarm",
+      fileUrl: "/sounds/Alarm.mp3",
       duration: 0,
+      type: req.body.type || "pomodoro",
     });
 
     newAccount.recordings.push(recording._id);
@@ -91,7 +95,9 @@ app.get("/api/account/:pomokey", async (req, res) => {
   try {
     const { pomokey } = req.params;
 
-    const account = await Account.findOne({ pomokey });
+    const account = await Account.findOne({ pomokey })
+      .populate("recordings")
+      .populate("notes");
 
     if (!account) {
       return res.status(404).send("Account not found");
@@ -124,6 +130,7 @@ app.post(
   async (req, res) => {
     try {
       const { pomokey } = req.params;
+      const { type } = req.body;
 
       const account = await Account.findOne({ pomokey });
 
@@ -133,10 +140,14 @@ app.post(
       if (!req.file) {
         return res.status(400).send("No file uploaded");
       }
+      if (!["pomodoro", "break", "long-break"].includes(type)) {
+        return res.status(400).send("Invalid recording type");
+      }
 
       const newRecording = await Recording.create({
         title: req.file.originalname,
         fileUrl: `/uploads/recordings/${req.file.filename}`,
+        type,
         duration: 0,
       });
 

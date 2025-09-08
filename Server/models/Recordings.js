@@ -5,6 +5,11 @@ const recording = new mongoose.Schema(
     title: { type: String, trim: true },
     fileUrl: { type: String, required: true, default: "Alarm.mp3" },
     duration: { type: Number, min: 0, default: 0 },
+    type: {
+      type: String,
+      enum: ["pomodoro", "break", "long-break"],
+      required: true,
+    },
   },
   { timestamps: true }
 );
