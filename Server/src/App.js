@@ -141,7 +141,7 @@ app.post(
       const { pomokey } = req.params;
       const { type } = req.body;
 
-      const account = await Account.findOne({ pomokey });
+      const account = await Account.findOne({ pomokey }).populate("recordings");
 
       if (!account) {
         return res.status(404).send("Account not found");
