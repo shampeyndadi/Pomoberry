@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import UploadAudioRecording from "../services/UploadAudioRecording";
+import GetAccount from "../services/GetAccount";
 
 const Switch = ({ id, checked, setChecked }) => {
   return (
@@ -63,13 +64,9 @@ function Settings({
         id
       );
 
-      setAccount((prev) => ({
-        ...prev,
-        recordings: [
-          ...prev.recordings.filter((r) => r.type !== id),
-          response.data,
-        ],
-      }));
+      const res = await GetAccount.getAccount(account.pomokey);
+
+      setAccount(res.data);
 
       setAudioFile((prev) => ({
         ...prev,
