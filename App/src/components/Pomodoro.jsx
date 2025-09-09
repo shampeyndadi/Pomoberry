@@ -179,9 +179,9 @@ const Pomodoro = ({
   autoStartPomodoro,
   account,
 }) => {
-  const pomodoroRecording = account?.recordings?.find(
-    (r) => r.type === "pomodoro"
-  );
+  const pomodoroRecording = account?.recordings
+    ?.filter((r) => r.type === "pomodoro")
+    ?.slice(-1)[0];
   return (
     <>
       <div>
