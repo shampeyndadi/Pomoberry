@@ -1,30 +1,36 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useTimer } from "react-timer-hook";
 
-function MyTimer({ expiryTimestamp, setShowSettings, duration, autoStartLongBreak }) {
+function MyTimer({
+  expiryTimestamp,
+  setShowSettings,
+  duration,
+  autoStartLongBreak,
+  alarmURL,
+}) {
   const remainingRef = useRef(null);
   const audioRef = useRef(null);
 
   useEffect(() => {
-    audioRef.current = new Audio("sounds/Alarm.mp3");
+    audioRef.current = new Audio(`http://localhost:3000${alarmURL}`);
     audioRef.current.preload = "auto";
     audioRef.current.volume = 0.9;
     audioRef.current.loop = true;
-  }, []) 
+  }, [alarmURL]);
 
-  function playAlarm(){
-    if (audioRef.current){
-      try{
+  function playAlarm() {
+    if (audioRef.current) {
+      try {
         audioRef.current.currentTime = 0;
         audioRef.current.play();
-      }catch(e){
+      } catch (e) {
         console.warn("Error playing audio:", e);
       }
     }
   }
 
-  function stopAlarm(){
-    if (audioRef.current){
+  function stopAlarm() {
+    if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
     }
@@ -34,10 +40,10 @@ function MyTimer({ expiryTimestamp, setShowSettings, duration, autoStartLongBrea
     expiryTimestamp,
     autoStart: autoStartLongBreak,
     onExpire: () => {
-      console.warn("onExpire called"); 
+      console.warn("onExpire called");
       playAlarm();
       setHighlight("pause");
-      document.addEventListener("click", stopAlarm, {once: true});
+      document.addEventListener("click", stopAlarm, { once: true });
     },
   });
 
@@ -48,7 +54,7 @@ function MyTimer({ expiryTimestamp, setShowSettings, duration, autoStartLongBrea
   }
 
   useEffect(() => {
-    if (!autoStartLongBreak){
+    if (!autoStartLongBreak) {
       pause();
       setHighlight("pause");
     }
@@ -165,7 +171,16 @@ function MyTimer({ expiryTimestamp, setShowSettings, duration, autoStartLongBrea
   );
 }
 
-const LongBreak = ({ expiryTimestamp, setShowSettings, duration, autoStartLongBreak }) => {
+const LongBreak = ({
+  expiryTimestamp,
+  setShowSettings,
+  duration,
+  autoStartLongBreak,
+  account,
+}) => {
+  const longbreakRecording = account?.recordings?.find(
+    (r) => r.type === "long-break"
+  );
   return (
     <>
       <div>
@@ -174,6 +189,7 @@ const LongBreak = ({ expiryTimestamp, setShowSettings, duration, autoStartLongBr
           setShowSettings={setShowSettings}
           duration={duration}
           autoStartLongBreak={autoStartLongBreak}
+          alarmURL={longbreakRecording?.fileUrl || "sounds/Alarm.mp3"}
         />
       </div>
     </>
