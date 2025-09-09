@@ -1,6 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useTimer } from "react-timer-hook";
-import Settings from "./Settings";
 
 function MyTimer({
   expiryTimestamp,

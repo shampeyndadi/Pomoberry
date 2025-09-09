@@ -176,6 +176,7 @@ function Main() {
                 setShowSettings={setShowSettings}
                 autoStartBreak={autoStartBreak}
                 duration={breakDuration}
+                account={account}
               />
             ) : (
               <LongBreak

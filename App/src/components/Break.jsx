@@ -1,30 +1,36 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useTimer } from "react-timer-hook";
 
-function MyTimer({ expiryTimestamp, setShowSettings, duration, autoStartBreak }) {
+function MyTimer({
+  expiryTimestamp,
+  setShowSettings,
+  duration,
+  autoStartBreak,
+  alarmURL,
+}) {
   const remainingRef = useRef(null);
   const audioRef = useRef(null);
 
   useEffect(() => {
-    audioRef.current = new Audio("sounds/Alarm.mp3");
+    audioRef.current = new Audio(`http://localhost:3000${alarmURL}`);
     audioRef.current.preload = "auto";
     audioRef.current.volume = 0.9;
     audioRef.current.loop = true;
-  }, []) 
+  }, [alarmURL]);
 
-  function playAlarm(){
-    if (audioRef.current){
-      try{
+  function playAlarm() {
+    if (audioRef.current) {
+      try {
         audioRef.current.currentTime = 0;
         audioRef.current.play();
-      }catch(e){
+      } catch (e) {
         console.warn("Error playing audio:", e);
       }
     }
   }
 
-  function stopAlarm(){
-    if (audioRef.current){
+  function stopAlarm() {
+    if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
     }
@@ -32,12 +38,12 @@ function MyTimer({ expiryTimestamp, setShowSettings, duration, autoStartBreak })
 
   const { seconds, minutes, start, pause, restart } = useTimer({
     expiryTimestamp,
-    autoStart:autoStartBreak,
+    autoStart: autoStartBreak,
     onExpire: () => {
-      console.warn("onExpire called"); 
+      console.warn("onExpire called");
       playAlarm();
       setHighlight("pause");
-      document.addEventListener("click", stopAlarm, {once: true});
+      document.addEventListener("click", stopAlarm, { once: true });
     },
   });
 
@@ -48,7 +54,7 @@ function MyTimer({ expiryTimestamp, setShowSettings, duration, autoStartBreak })
   }
 
   useEffect(() => {
-    if (!autoStartBreak){
+    if (!autoStartBreak) {
       pause();
       setHighlight("pause");
     }
@@ -165,7 +171,15 @@ function MyTimer({ expiryTimestamp, setShowSettings, duration, autoStartBreak })
   );
 }
 
-const Break = ({ expiryTimestamp, setShowSettings, duration, autoStartBreak }) => {
+const Break = ({
+  expiryTimestamp,
+  setShowSettings,
+  duration,
+  autoStartBreak,
+  account,
+}) => {
+  const breakRecording = account?.recordings?.find((r) => r.type === "break");
+
   return (
     <>
       <div>
@@ -174,6 +188,7 @@ const Break = ({ expiryTimestamp, setShowSettings, duration, autoStartBreak }) =
           setShowSettings={setShowSettings}
           duration={duration}
           autoStartBreak={autoStartBreak}
+          alarmURL={breakRecording?.fileUrl || "/sounds/Alarm.mp3"}
         />
       </div>
     </>
