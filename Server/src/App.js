@@ -53,6 +53,9 @@ app.use(
 
 app.use(express.json());
 
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use("/sounds", express.static(path.join(__dirname, "sounds")));
+
 app.listen(PORT, () => {
   console.log("Listening to port 3000");
 });
@@ -71,14 +74,20 @@ app.post("/api/account", async (req, res) => {
 
     const newAccount = await Account.create({ pomokey });
 
-    const recording = await Recording.create({
-      title: "Default Alarm",
-      fileUrl: "/sounds/Alarm.mp3",
-      duration: 0,
-      type: req.body.type || "pomodoro",
-    });
+    const defaultTypes = ["pomodoro", "break", "long-break"];
 
-    newAccount.recordings.push(recording._id);
+    const recordings = await Promise.all(
+      defaultTypes.map((type) =>
+        Recording.create({
+          title: "Default Alarm",
+          fileUrl: `/sounds/Alarm.mp3`,
+          duration: 0,
+          type,
+        })
+      )
+    );
+
+    newAccount.recordings.push(...recordings.map((r) => r._id));
     await newAccount.save();
 
     if (!newAccount) {
@@ -142,6 +151,15 @@ app.post(
       }
       if (!["pomodoro", "break", "long-break"].includes(type)) {
         return res.status(400).send("Invalid recording type");
+      }
+
+      const oldRecording = account.recordings.find((r) => r.type === type);
+
+      if (oldRecording) {
+        await Recording.findByIdAndDelete(oldRecording._id);
+        account.recordings = account.recordings.filter(
+          (r) => r._id.toString() !== oldRecording._id.toString()
+        );
       }
 
       const newRecording = await Recording.create({
