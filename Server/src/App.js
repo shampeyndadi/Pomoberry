@@ -8,22 +8,16 @@ const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
 
-const uploadDir = path.join(__dirname, "uploads", "recordings");
+const { createClient } = require("@supabase/supabase-js");
 
-fs.mkdirSync(uploadDir, { recursive: true });
+require("dotenv").config();
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, uploadDir);
-  },
-  filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-    const ext = path.extname(file.originalname);
-    cb(null, file.fieldname + "-" + uniqueSuffix + ext);
-  },
-});
+const supabase = createClient(
+  process.env.SUPABASE_URI,
+  process.env.SUPABASE_SERVICE_ROLE_KEY
+);
 
-const upload = multer({ storage });
+const upload = multer({ storage: multer.memoryStorage() });
 
 const Account = require("../models/Account");
 const Note = require("../models/Note");
@@ -32,8 +26,6 @@ const Recording = require("../models/Recordings");
 const app = express();
 
 const PORT = 3000;
-
-require("dotenv").config();
 
 app.use(
   session({
@@ -104,13 +96,31 @@ app.get("/api/account/:pomokey", async (req, res) => {
   try {
     const { pomokey } = req.params;
 
-    const account = await Account.findOne({ pomokey })
+    let account = await Account.findOne({ pomokey })
       .populate("recordings")
       .populate("notes");
 
     if (!account) {
       return res.status(404).send("Account not found");
     }
+
+    const updatedRecordings = await Promise.all(
+      account.recordings.map(async (rec) => {
+        if (!rec.fileUrl || rec.fileUrl.startsWith("/sounds")) return rec;
+
+        const { data, error } = await supabase.storage
+          .from("pomoberry-recordings")
+          .createSignedUrl(rec.fileUrl, 60 * 60);
+
+        return {
+          ...rec.toObject(),
+          fileUrl: error ? null : data.signedUrl,
+        };
+      })
+    );
+
+    account = account.toObject();
+    account.recordings = updatedRecordings;
 
     res.status(200).send(account);
   } catch (err) {
@@ -153,18 +163,24 @@ app.post(
         return res.status(400).send("Invalid recording type");
       }
 
-      const oldRecording = account.recordings.find((r) => r.type === type);
+      const fileName = `${pomokey}-${type}-${Date.now()}${path.extname(
+        req.file.originalname
+      )}`;
 
-      if (oldRecording) {
-        await Recording.findByIdAndDelete(oldRecording._id);
-        account.recordings = account.recordings.filter(
-          (r) => r._id.toString() !== oldRecording._id.toString()
-        );
-      }
+      const { data, error } = await supabase.storage
+        .from("pomoberry-recordings")
+        .upload(fileName, req.file.buffer, {
+          contentType: req.file.mimetype,
+          upsert: true,
+        });
+
+      if (error) return res.status(500).send("Upload failed");
+
+      const filePath = data.path;
 
       const newRecording = await Recording.create({
         title: req.file.originalname,
-        fileUrl: `/uploads/recordings/${req.file.filename}`,
+        fileUrl: filePath,
         type,
         duration: 0,
       });
@@ -178,6 +194,22 @@ app.post(
     }
   }
 );
+
+app.get("/api/recording/url/:path", async (req, res) => {
+  try {
+    const { path } = req.params;
+
+    const { data, error } = await supabase.storage
+      .from("pomoberry-recordings")
+      .createSignedUrl(path, 60 * 60);
+
+    if (error) return res.status(500).send("Could not create signed URL");
+
+    res.json({ url: data.signedUrl });
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
 
 mongoose
   .connect(process.env.MONGO_URI)
