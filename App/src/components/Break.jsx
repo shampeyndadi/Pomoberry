@@ -12,7 +12,7 @@ function MyTimer({
   const audioRef = useRef(null);
 
   useEffect(() => {
-    audioRef.current = new Audio(`http://localhost:3000${alarmURL}`);
+    audioRef.current = new Audio(alarmURL);
     audioRef.current.preload = "auto";
     audioRef.current.volume = 0.9;
     audioRef.current.loop = true;
@@ -49,7 +49,6 @@ function MyTimer({
 
   function handlePause() {
     pause();
-
     remainingRef.current = minutes * 60 + seconds;
   }
 
@@ -178,7 +177,9 @@ const Break = ({
   autoStartBreak,
   account,
 }) => {
-  const breakRecording = account?.recordings?.find((r) => r.type === "break");
+  const breakRecording = account?.recordings
+    ?.filter((r) => r.type === "break")
+    ?.slice(-1)[0];
 
   return (
     <>

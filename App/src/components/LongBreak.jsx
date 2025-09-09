@@ -12,7 +12,7 @@ function MyTimer({
   const audioRef = useRef(null);
 
   useEffect(() => {
-    audioRef.current = new Audio(`http://localhost:3000${alarmURL}`);
+    audioRef.current = new Audio(alarmURL);
     audioRef.current.preload = "auto";
     audioRef.current.volume = 0.9;
     audioRef.current.loop = true;
@@ -178,9 +178,9 @@ const LongBreak = ({
   autoStartLongBreak,
   account,
 }) => {
-  const longbreakRecording = account?.recordings?.find(
-    (r) => r.type === "long-break"
-  );
+  const longbreakRecording = account?.recordings
+    ?.filter((r) => r.type === "long-break")
+    ?.slice(-1)[0];
   return (
     <>
       <div>
