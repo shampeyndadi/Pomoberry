@@ -167,6 +167,7 @@ function Main() {
                 setShowSettings={setShowSettings}
                 autoStartPomodoro={autoStartPomodoro}
                 duration={pomodoroDuration}
+                account={account}
               />
             ) : currentState === "Break" ? (
               <Break

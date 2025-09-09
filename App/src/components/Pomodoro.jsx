@@ -7,16 +7,17 @@ function MyTimer({
   setShowSettings,
   duration,
   autoStartPomodoro,
+  alarmURL,
 }) {
   const remainingRef = useRef(null);
   const audioRef = useRef(null);
 
   useEffect(() => {
-    audioRef.current = new Audio("sounds/Alarm.mp3");
+    audioRef.current = new Audio(`http://localhost:3000${alarmURL}`);
     audioRef.current.preload = "auto";
     audioRef.current.volume = 0.9;
     audioRef.current.loop = true;
-  }, []);
+  }, [alarmURL]);
 
   function playAlarm() {
     if (audioRef.current) {
@@ -177,7 +178,11 @@ const Pomodoro = ({
   setShowSettings,
   duration,
   autoStartPomodoro,
+  account,
 }) => {
+  const pomodoroRecording = account?.recordings?.find(
+    (r) => r.type === "pomodoro"
+  );
   return (
     <>
       <div>
@@ -186,6 +191,7 @@ const Pomodoro = ({
           setShowSettings={setShowSettings}
           duration={duration}
           autoStartPomodoro={autoStartPomodoro}
+          alarmURL={pomodoroRecording?.fileUrl || "/sounds/Alarm.mp3"}
         />
       </div>
     </>

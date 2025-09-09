@@ -85,7 +85,7 @@ function Settings({
     if (editAudioFile !== id) {
       return (
         <div className="flex space-x-2 items-center">
-          <h1 className="border bg-gray-200 px-3 py-1 rounded-lg">
+          <h1 className="border bg-gray-200 px-3 py-1 rounded-lg w-[8rem] truncate">
             {getRecordingTitleByType(id)}
           </h1>
 
