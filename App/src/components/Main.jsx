@@ -7,7 +7,7 @@ import LongBreak from "./LongBreak";
 import Navbar from "./Navbar";
 import Todolist from "./Todolist";
 import KeyModal from "./KeyModal";
-
+import Messages from "./Messages";
 import LogoutAccount from "../services/LogoutAccount";
 
 const GlobalStyle = createGlobalStyle`
@@ -30,6 +30,7 @@ function Main() {
   const [showTodolist, setShowTodoList] = useState(false);
   const [showKeyModal, setShowKeyModal] = useState(false);
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+  const [showMessagesModal, setShowMessagesModal] = useState(false);
 
   const [account, setAccount] = useState(null);
 
@@ -113,9 +114,21 @@ function Main() {
         <div className="flex items-center justify-center h-[47rem]">
           <div className="flex flex-col space-y-5">
             <div className="flex flex-col">
-              <h2 className="text-[10rem] text-center font-bold text-pink-600">
-                Pomoberry
-              </h2>
+              {account ? (
+                <div
+                  onClick={() => {
+                    setShowMessagesModal(true);
+                  }}
+                >
+                  <h2 className="text-[10rem] text-center font-bold text-pink-600 hover: cursor-pointer">
+                    Pomoberry
+                  </h2>
+                </div>
+              ) : (
+                <h2 className="text-[10rem] text-center font-bold text-pink-600">
+                  Pomoberry
+                </h2>
+              )}
             </div>
 
             {showTodolist && (
@@ -130,6 +143,10 @@ function Main() {
                 setShowKeyModal={setShowKeyModal}
                 setAccount={setAccount}
               />
+            )}
+
+            {showMessagesModal && (
+              <Messages setShowMessagesModal={setShowMessagesModal} />
             )}
 
             {showConfirmationModal && confirmationModal()}
@@ -242,7 +259,7 @@ function Main() {
             </div>
           ) : (
             <div
-              className="rounded-lg px-3 py-4 text-pink-400 text-3xl font-bold hover:cursor-pointer hover:border-pink-600 hover:text-pink-600"
+              className="flex flex-col items-center rounded-lg px-3 py-4 text-pink-400 text-3xl font-bold hover:cursor-pointer hover:border-pink-600 hover:text-pink-600"
               onClick={() => {
                 setShowConfirmationModal(true);
               }}
