@@ -143,6 +143,29 @@ app.post("/api/account/logout", async (req, res) => {
   }
 });
 
+app.post("/api/notes/:pomokey", async (req, res) => {
+  try {
+    const { pomokey } = req.params;
+    const { content } = req.body;
+
+    const account = await Account.findOne({ pomokey }).populate("notes");
+
+    if (!account) {
+      return res.status(404).send("Account not found");
+    }
+
+    const newNote = await Note.create({ content });
+
+    account.notes.push(newNote._id);
+
+    await account.save();
+
+    res.status(201).send(newNote);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
 app.post(
   "/api/recording/upload/:pomokey",
   upload.single("recording"),
