@@ -146,7 +146,10 @@ function Main() {
             )}
 
             {showMessagesModal && (
-              <Messages setShowMessagesModal={setShowMessagesModal} />
+              <Messages
+                setShowMessagesModal={setShowMessagesModal}
+                account={account}
+              />
             )}
 
             {showConfirmationModal && confirmationModal()}

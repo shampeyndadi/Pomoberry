@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import Dog from "./Dog";
+import CreateNote from "../Services/CreateNote";
 
-function Messages({ setShowMessagesModal }) {
+function Messages({ setShowMessagesModal, account }) {
   const [message, setMessage] = useState("");
   const MAX_CHARS = 30;
 
@@ -15,6 +16,15 @@ function Messages({ setShowMessagesModal }) {
   };
 
   const charCount = message.length;
+
+  const uploadNote = async (message) => {
+    try {
+      const response = await CreateNote.createNote(account.pomokey, message);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div
@@ -61,7 +71,12 @@ function Messages({ setShowMessagesModal }) {
               <span>
                 {charCount} / {MAX_CHARS}
               </span>
-              <button className="px-3 py-1 bg-pink-400 text-white rounded-lg">
+              <button
+                onClick={() => {
+                  uploadNote(message);
+                }}
+                className="px-3 py-1 bg-pink-400 text-white rounded-lg"
+              >
                 Add message
               </button>
             </div>
