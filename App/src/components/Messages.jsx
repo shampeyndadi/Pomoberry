@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Dog from "./Dog";
 import CreateNote from "../Services/CreateNote";
+import DeleteNote from "../services/DeleteNote";
 
 function Messages({ setShowMessagesModal, account }) {
   const [message, setMessage] = useState("");
   const [notes, setNotes] = useState(account?.notes ?? []);
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+  const [noteID, setNoteID] = useState(null);
   const MAX_CHARS = 30;
 
   const handleChange = (e) => {
@@ -38,6 +41,51 @@ function Messages({ setShowMessagesModal, account }) {
     }
   };
 
+  const deleteNote = async (noteId) => {
+    try {
+      const response = await DeleteNote.deleteNote(account.pomokey, noteId);
+      setNotes(response.data.notes);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  function confirmationModal() {
+    if (showConfirmationModal === true) {
+      return (
+        <div className="fixed top-0 left-0 right-0 bottom-0 w-full h-full z-[9999] bg-red-500/20 flex items-center justify-center">
+          <div className="bg-white py-5 px-5 rounded-lg shadow">
+            <div className="flex flex-col items-center space-y-7 px-5 py-5">
+              <h1 className="font-bold text-center text-xl text-pink-600">
+                Are you sure you want to delete this message?
+              </h1>
+
+              <div className="flex space-x-3">
+                <button
+                  onClick={() => {
+                    deleteNote(noteID);
+                    setShowConfirmationModal(false);
+                  }}
+                  className="bg-green-300 px-3 py-3 font-bold text-lg rounded-lg hover:bg-green-500"
+                >
+                  Delete
+                </button>
+                <button
+                  onClick={() => {
+                    setShowConfirmationModal(false);
+                  }}
+                  className="bg-red-300 px-3 py-3 font-bold text-lg rounded-lg hover:bg-red-500"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+  }
+
   function display() {
     if (notes.length === 0) {
       return (
@@ -61,6 +109,10 @@ function Messages({ setShowMessagesModal, account }) {
                 strokeWidth="1.5"
                 stroke="currentColor"
                 className="w-6 h-6 hover:cursor-pointer"
+                onClick={() => {
+                  setNoteID(note._id);
+                  setShowConfirmationModal(true);
+                }}
               >
                 <path
                   strokeLinecap="round"
@@ -108,6 +160,8 @@ function Messages({ setShowMessagesModal, account }) {
               </svg>
             </div>
           </div>
+
+          {confirmationModal()}
 
           <div className="px-10 mt-4">
             <textarea
