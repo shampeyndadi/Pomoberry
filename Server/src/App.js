@@ -148,7 +148,7 @@ app.post("/api/notes/:pomokey", async (req, res) => {
     const { pomokey } = req.params;
     const { content } = req.body;
 
-    const account = await Account.findOne({ pomokey }).populate("notes");
+    const account = await Account.findOne({ pomokey });
 
     if (!account) {
       return res.status(404).send("Account not found");
@@ -160,7 +160,9 @@ app.post("/api/notes/:pomokey", async (req, res) => {
 
     await account.save();
 
-    res.status(201).send(newNote);
+    const updatedAccount = await Account.findOne({ pomokey }).populate("notes");
+
+    res.status(201).send(updatedAccount);
   } catch (err) {
     res.status(500).send(err);
   }
