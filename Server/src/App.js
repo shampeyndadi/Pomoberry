@@ -168,6 +168,30 @@ app.post("/api/notes/:pomokey", async (req, res) => {
   }
 });
 
+app.delete("/api/notes/:pomokey/:noteId", async (req, res) => {
+  try {
+    const { pomokey, noteId } = req.params;
+
+    const account = await Account.findOne({ pomokey });
+
+    if (!account) {
+      return res.status(404).send("Account not found");
+    }
+
+    account.notes = account.notes.filter((id) => id.toString() !== noteId);
+
+    await account.save();
+
+    await Note.findByIdAndDelete(noteId);
+
+    const updatedAccount = await Account.findOne({ pomokey }).populate("notes");
+
+    res.status(200).send(updatedAccount);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
 app.post(
   "/api/recording/upload/:pomokey",
   upload.single("recording"),
