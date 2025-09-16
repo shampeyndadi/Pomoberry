@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import Pomodoro from "./Pomodoro";
 import Break from "./Break";
@@ -21,7 +21,7 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 function Main() {
-  const encouragementMessage = "Keep going! You're doing great!";
+  const [notes, setNotes] = useState([]);
 
   const [currentState, newState] = useState("Pomodoro");
   const [highlight, setHighlight] = useState("start");
@@ -37,10 +37,33 @@ function Main() {
   const [pomodoroDuration, setPomodoroDuration] = useState(25);
   const [breakDuration, setBreakDuration] = useState(5);
   const [longBreakDuration, setLongBreakDuration] = useState(15);
+  const [currentNoteIndex, setCurrentNoteIndex] = useState(0);
 
   const [autoStartPomodoro, setAutoStartPomodoro] = useState(true);
   const [autoStartBreak, setAutoStartBreak] = useState(true);
   const [autoStartLongBreak, setAutoStartLongBreak] = useState(true);
+
+  const [isFadingOut, setFadingOut] = useState(false);
+
+  useEffect(() => {
+    setNotes(account?.notes ?? []);
+    setCurrentNoteIndex(0);
+  }, [account]);
+
+  useEffect(() => {
+    if (notes.length === 0) return;
+
+    const interval = setInterval(() => {
+      setFadingOut(true);
+
+      setTimeout(() => {
+        setCurrentNoteIndex((prev) => (prev + 1) % notes.length);
+        setFadingOut(false);
+      }, 700);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [notes]);
 
   const logout = async () => {
     try {
@@ -120,9 +143,22 @@ function Main() {
                     setShowMessagesModal(true);
                   }}
                 >
-                  <h2 className="text-[10rem] text-center font-bold text-pink-600 hover: cursor-pointer">
-                    Pomoberry
-                  </h2>
+                  <div className="flex flex-col items-center">
+                    <h2 className="text-[10rem] text-center font-bold text-pink-600 hover: cursor-pointer">
+                      Pomoberry
+                    </h2>
+
+                    {notes.length > 0 && (
+                      <h1
+                        key={currentNoteIndex}
+                        className={`text-[1.5rem] text-pink-300 font-bold ${
+                          isFadingOut ? "animate-fadeOut" : "animate-fadeIn"
+                        }`}
+                      >
+                        {notes[currentNoteIndex].content}
+                      </h1>
+                    )}
+                  </div>
                 </div>
               ) : (
                 <h2 className="text-[10rem] text-center font-bold text-pink-600">
