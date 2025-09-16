@@ -6,6 +6,8 @@ function MyTimer({
   setShowSettings,
   duration,
   autoStartPomodoro,
+  newState,
+  resetTimer,
   alarmURL,
 }) {
   const remainingRef = useRef(null);
@@ -43,6 +45,8 @@ function MyTimer({
       console.warn("onExpire called");
       playAlarm();
       setHighlight("pause");
+      newState("Break");
+      resetTimer("Break");
       document.addEventListener("click", stopAlarm, { once: true });
     },
   });
@@ -147,7 +151,7 @@ function MyTimer({
           className="cursor-pointer py-3 px-3 rounded-lg bg-transparent hover:bg-pink-300 "
           onClick={(e) => {
             e.stopPropagation();
-            setHighlight("start");
+            setHighlight1("start");
             handleRewind();
             stopAlarm();
           }}
@@ -177,6 +181,8 @@ const Pomodoro = ({
   setShowSettings,
   duration,
   autoStartPomodoro,
+  newState,
+  resetTimer,
   account,
 }) => {
   const pomodoroRecording = account?.recordings
@@ -190,6 +196,8 @@ const Pomodoro = ({
           setShowSettings={setShowSettings}
           duration={duration}
           autoStartPomodoro={autoStartPomodoro}
+          newState={newState}
+          resetTimer={resetTimer}
           alarmURL={pomodoroRecording?.fileUrl || "/sounds/Alarm.mp3"}
         />
       </div>

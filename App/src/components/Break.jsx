@@ -6,6 +6,8 @@ function MyTimer({
   setShowSettings,
   duration,
   autoStartBreak,
+  newState,
+  resetTimer,
   alarmURL,
 }) {
   const remainingRef = useRef(null);
@@ -43,6 +45,8 @@ function MyTimer({
       console.warn("onExpire called");
       playAlarm();
       setHighlight("pause");
+      newState("Pomodoro");
+      resetTimer("Pomodoro");
       document.addEventListener("click", stopAlarm, { once: true });
     },
   });
@@ -145,7 +149,7 @@ function MyTimer({
           onClick={(e) => {
             e.stopPropagation();
             const time = new Date();
-            setHighlight("start");
+            setHighlight1("start");
             handleRewind();
             stopAlarm();
           }}
@@ -175,6 +179,8 @@ const Break = ({
   setShowSettings,
   duration,
   autoStartBreak,
+  newState,
+  resetTimer,
   account,
 }) => {
   const breakRecording = account?.recordings
@@ -189,6 +195,8 @@ const Break = ({
           setShowSettings={setShowSettings}
           duration={duration}
           autoStartBreak={autoStartBreak}
+          newState={newState}
+          resetTimer={resetTimer}
           alarmURL={breakRecording?.fileUrl || "/sounds/Alarm.mp3"}
         />
       </div>

@@ -65,6 +65,12 @@ function Main() {
     return () => clearInterval(interval);
   }, [notes]);
 
+  useEffect(() => {
+    if (currentState === "Pomodoro") setHighlight("start");
+    if (currentState === "Break") setHighlight("break");
+    if (currentState === "LongBreak") setHighlight("long-break");
+  }, [currentState]);
+
   const logout = async () => {
     try {
       const response = await LogoutAccount.logoutAccount();
@@ -223,6 +229,8 @@ function Main() {
                 setShowSettings={setShowSettings}
                 autoStartPomodoro={autoStartPomodoro}
                 duration={pomodoroDuration}
+                newState={newState}
+                resetTimer={resetTimer}
                 account={account}
               />
             ) : currentState === "Break" ? (
@@ -232,6 +240,8 @@ function Main() {
                 setShowSettings={setShowSettings}
                 autoStartBreak={autoStartBreak}
                 duration={breakDuration}
+                newState={newState}
+                resetTimer={resetTimer}
                 account={account}
               />
             ) : (
