@@ -150,7 +150,6 @@ function Main() {
 
                     {notes.length > 0 && (
                       <h1
-                        key={currentNoteIndex}
                         className={`text-[1.5rem] text-pink-300 font-bold ${
                           isFadingOut ? "animate-fadeOut" : "animate-fadeIn"
                         }`}
