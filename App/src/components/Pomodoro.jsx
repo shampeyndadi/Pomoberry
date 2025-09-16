@@ -151,7 +151,7 @@ function MyTimer({
           className="cursor-pointer py-3 px-3 rounded-lg bg-transparent hover:bg-pink-300 "
           onClick={(e) => {
             e.stopPropagation();
-            setHighlight1("start");
+            setHighlight("start");
             handleRewind();
             stopAlarm();
           }}

@@ -149,7 +149,7 @@ function MyTimer({
           onClick={(e) => {
             e.stopPropagation();
             const time = new Date();
-            setHighlight1("start");
+            setHighlight("start");
             handleRewind();
             stopAlarm();
           }}
