@@ -3,7 +3,7 @@ import Dog from "./Dog";
 import CreateNote from "../Services/CreateNote";
 import DeleteNote from "../services/DeleteNote";
 
-function Messages({ setShowMessagesModal, account }) {
+function Messages({ setShowMessagesModal, account, setAccount }) {
   const [message, setMessage] = useState("");
   const [notes, setNotes] = useState(account?.notes ?? []);
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
@@ -31,8 +31,10 @@ function Messages({ setShowMessagesModal, account }) {
 
       if (response.data.notes) {
         setNotes(response.data.notes);
+        setAccount((prev) => ({ ...prev, notes: response.data.notes }));
       } else {
         setNotes((prev) => [...prev, response.data]);
+        setAccount((prev) => ({ ...prev, notes: response.data.notes }));
       }
 
       setMessage("");
@@ -45,6 +47,7 @@ function Messages({ setShowMessagesModal, account }) {
     try {
       const response = await DeleteNote.deleteNote(account.pomokey, noteId);
       setNotes(response.data.notes);
+      setAccount((prev) => ({ ...prev, notes: response.data.notes }));
     } catch (error) {
       console.log(error);
     }

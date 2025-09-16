@@ -149,6 +149,7 @@ function Main() {
               <Messages
                 setShowMessagesModal={setShowMessagesModal}
                 account={account}
+                setAccount={setAccount}
               />
             )}
 
