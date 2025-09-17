@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const session = require("express-session");
 const bodyParser = require("body-parser");
+const bcrypt = require("bcrypt");
 
 const multer = require("multer");
 const path = require("path");
@@ -64,7 +65,17 @@ app.post("/api/account", async (req, res) => {
       return res.status(400).send("Pomokey is required");
     }
 
-    const newAccount = await Account.create({ pomokey });
+    const accounts = await Account.find();
+
+    for (const acc of accounts) {
+      const isMatch = await bcrypt.compare(pomokey, acc.pomokey);
+      if (isMatch) {
+        return res.status(200).send(acc);
+      }
+    }
+
+    const hash = await bcrypt.hash(pomokey, 10);
+    const newAccount = await Account.create({ pomokey: hash });
 
     const defaultTypes = ["pomodoro", "break", "long-break"];
 
@@ -92,11 +103,38 @@ app.post("/api/account", async (req, res) => {
   }
 });
 
-app.get("/api/account/:pomokey", async (req, res) => {
+app.post("/api/account/login", async (req, res) => {
   try {
-    const { pomokey } = req.params;
+    const { pomokey } = req.body;
 
-    let account = await Account.findOne({ pomokey })
+    if (!pomokey) return res.status(404).send("Pomokey required");
+
+    const accounts = await Account.find();
+
+    let matchedAccount = null;
+
+    for (const acc of accounts) {
+      const isMatch = await bcrypt.compare(pomokey, acc.pomokey);
+
+      if (isMatch) {
+        matchedAccount = acc;
+        break;
+      }
+    }
+
+    if (!matchedAccount) return res.status(404).send("Invalid pomokey");
+
+    res.status(200).send({ accountId: matchedAccount._id });
+  } catch (err) {
+    res.status(500).send("Server error");
+  }
+});
+
+app.get("/api/account/:accountId", async (req, res) => {
+  try {
+    const { accountId } = req.params;
+
+    let account = await Account.findById(accountId)
       .populate("recordings")
       .populate("notes");
 
@@ -143,12 +181,12 @@ app.post("/api/account/logout", async (req, res) => {
   }
 });
 
-app.post("/api/notes/:pomokey", async (req, res) => {
+app.post("/api/notes/:accountId", async (req, res) => {
   try {
-    const { pomokey } = req.params;
+    const { accountId } = req.params;
     const { content } = req.body;
 
-    const account = await Account.findOne({ pomokey });
+    const account = await Account.findById(accountId);
 
     if (!account) {
       return res.status(404).send("Account not found");
@@ -160,7 +198,7 @@ app.post("/api/notes/:pomokey", async (req, res) => {
 
     await account.save();
 
-    const updatedAccount = await Account.findOne({ pomokey }).populate("notes");
+    const updatedAccount = await Account.findById(accountId).populate("notes");
 
     res.status(201).send(updatedAccount);
   } catch (err) {
@@ -168,11 +206,11 @@ app.post("/api/notes/:pomokey", async (req, res) => {
   }
 });
 
-app.delete("/api/notes/:pomokey/:noteId", async (req, res) => {
+app.delete("/api/notes/:accountId/:noteId", async (req, res) => {
   try {
-    const { pomokey, noteId } = req.params;
+    const { accountId, noteId } = req.params;
 
-    const account = await Account.findOne({ pomokey });
+    const account = await Account.findById(accountId);
 
     if (!account) {
       return res.status(404).send("Account not found");
@@ -184,7 +222,7 @@ app.delete("/api/notes/:pomokey/:noteId", async (req, res) => {
 
     await Note.findByIdAndDelete(noteId);
 
-    const updatedAccount = await Account.findOne({ pomokey }).populate("notes");
+    const updatedAccount = await Account.findById(accountId).populate("notes");
 
     res.status(200).send(updatedAccount);
   } catch (err) {
@@ -193,14 +231,14 @@ app.delete("/api/notes/:pomokey/:noteId", async (req, res) => {
 });
 
 app.post(
-  "/api/recording/upload/:pomokey",
+  "/api/recording/upload/:accountId",
   upload.single("recording"),
   async (req, res) => {
     try {
-      const { pomokey } = req.params;
+      const { accountId } = req.params;
       const { type } = req.body;
 
-      const account = await Account.findOne({ pomokey }).populate("recordings");
+      const account = await Account.findById(accountId).populate("recordings");
 
       if (!account) {
         return res.status(404).send("Account not found");
@@ -212,7 +250,7 @@ app.post(
         return res.status(400).send("Invalid recording type");
       }
 
-      const fileName = `${pomokey}-${type}-${Date.now()}${path.extname(
+      const fileName = `${accountId}-${type}-${Date.now()}${path.extname(
         req.file.originalname
       )}`;
 
