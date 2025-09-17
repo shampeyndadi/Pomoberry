@@ -70,7 +70,10 @@ app.post("/api/account", async (req, res) => {
     for (const acc of accounts) {
       const isMatch = await bcrypt.compare(pomokey, acc.pomokey);
       if (isMatch) {
-        return res.status(200).send(acc);
+        const populatedAccount = await Account.findById(acc._id)
+          .populate("recordings")
+          .populate("notes");
+        return res.status(200).send(populatedAccount);
       }
     }
 
@@ -124,7 +127,11 @@ app.post("/api/account/login", async (req, res) => {
 
     if (!matchedAccount) return res.status(404).send("Invalid pomokey");
 
-    res.status(200).send({ accountId: matchedAccount._id });
+    const populatedAccount = await Account.findById(matchedAccount._id)
+      .populate("recordings")
+      .populate("notes");
+
+    res.status(200).send(populatedAccount);
   } catch (err) {
     res.status(500).send("Server error");
   }
