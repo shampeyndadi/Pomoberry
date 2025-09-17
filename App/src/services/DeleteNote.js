@@ -1,7 +1,7 @@
 import Api from "../services/Api";
 
 export default {
-  async deleteNote(pomokey, noteId) {
-    return Api().delete(`api/notes/${pomokey}/${noteId}`);
+  async deleteNote(accountId, noteId) {
+    return Api().delete(`api/notes/${accountId}/${noteId}`);
   },
 };

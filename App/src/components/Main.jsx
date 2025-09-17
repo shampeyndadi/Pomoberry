@@ -313,7 +313,7 @@ function Main() {
                 setShowConfirmationModal(true);
               }}
             >
-              {account.pomokey}
+              Exit
             </div>
           )}
         </div>

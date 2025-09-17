@@ -59,12 +59,12 @@ function Settings({
 
     try {
       const response = await UploadAudioRecording.uploadAudioRecording(
-        account.pomokey,
+        account._id,
         file,
         id
       );
 
-      const res = await GetAccount.getAccount(account.pomokey);
+      const res = await GetAccount.getAccount(account._id);
 
       setAccount(res.data);
 

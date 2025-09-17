@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import CreateAccount from "../services/CreateAccount";
 import GetAccount from "../services/GetAccount";
+import LoginAccount from "../services/LoginAccount";
 
 const Switch = ({ checked, setChecked }) => {
   return (
@@ -146,8 +147,10 @@ function KeyModal({ setShowKeyModal, setAccount }) {
 
   const fetchAccount = async () => {
     try {
-      const response = await GetAccount.getAccount(pomokey);
-      setAccount(response.data);
+      const accountId = await LoginAccount.LoginAccount(pomokey);
+      const account = await GetAccount.getAccount(accountId);
+
+      setAccount(account.data);
     } catch (err) {
       console.error(err);
     }

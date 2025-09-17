@@ -27,7 +27,7 @@ function Messages({ setShowMessagesModal, account, setAccount }) {
 
   const uploadNote = async (message) => {
     try {
-      const response = await CreateNote.createNote(account.pomokey, message);
+      const response = await CreateNote.createNote(account._id, message);
 
       if (response.data.notes) {
         setNotes(response.data.notes);
@@ -45,7 +45,7 @@ function Messages({ setShowMessagesModal, account, setAccount }) {
 
   const deleteNote = async (noteId) => {
     try {
-      const response = await DeleteNote.deleteNote(account.pomokey, noteId);
+      const response = await DeleteNote.deleteNote(account._id, noteId);
       setNotes(response.data.notes);
       setAccount((prev) => ({ ...prev, notes: response.data.notes }));
     } catch (error) {
