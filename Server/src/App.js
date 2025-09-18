@@ -70,9 +70,27 @@ app.post("/api/account", async (req, res) => {
     for (const acc of accounts) {
       const isMatch = await bcrypt.compare(pomokey, acc.pomokey);
       if (isMatch) {
-        const populatedAccount = await Account.findById(acc._id)
+        let populatedAccount = await Account.findById(acc._id)
           .populate("recordings")
           .populate("notes");
+
+        const updatedRecordings = await Promise.all(
+          populatedAccount.recordings.map(async (rec) => {
+            if (!rec.fileUrl || rec.fileUrl.startsWith("/sounds")) return rec;
+
+            const { data, error } = await supabase.storage
+              .from("pomoberry-recordings")
+              .createSignedUrl(rec.fileUrl, 60 * 60);
+
+            return {
+              ...rec.toObject(),
+              fileUrl: error ? null : data.signedUrl,
+            };
+          })
+        );
+
+        populatedAccount = populatedAccount.toObject();
+        populatedAccount.recordings = updatedRecordings;
         return res.status(200).send(populatedAccount);
       }
     }
@@ -127,9 +145,27 @@ app.post("/api/account/login", async (req, res) => {
 
     if (!matchedAccount) return res.status(404).send("Invalid pomokey");
 
-    const populatedAccount = await Account.findById(matchedAccount._id)
+    let populatedAccount = await Account.findById(matchedAccount._id)
       .populate("recordings")
       .populate("notes");
+
+    const updatedRecordings = await Promise.all(
+      populatedAccount.recordings.map(async (rec) => {
+        if (!rec.fileUrl || rec.fileUrl.startsWith("/sounds")) return rec;
+
+        const { data, error } = await supabase.storage
+          .from("pomoberry-recordings")
+          .createSignedUrl(rec.fileUrl, 60 * 60);
+
+        return {
+          ...rec.toObject(),
+          fileUrl: error ? null : data.signedUrl,
+        };
+      })
+    );
+
+    populatedAccount = populatedAccount.toObject();
+    populatedAccount.recordings = updatedRecordings;
 
     res.status(200).send(populatedAccount);
   } catch (err) {
