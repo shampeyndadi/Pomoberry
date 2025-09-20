@@ -150,7 +150,7 @@ function Main() {
                   }}
                 >
                   <div className="flex flex-col items-center">
-                    <h2 className="text-[10rem] text-center font-bold text-pink-600 hover: cursor-pointer">
+                    <h2 className="text-[4rem] sm:text-[7rem] md:text-[8rem] lg:text-[10rem] text-center font-bold text-pink-600">
                       Pomoberry
                     </h2>
 
@@ -166,7 +166,7 @@ function Main() {
                   </div>
                 </div>
               ) : (
-                <h2 className="text-[10rem] text-center font-bold text-pink-600">
+                <h2 className="text-[4rem] sm:text-[7rem] md:text-[8rem] lg:text-[10rem] text-center font-bold text-pink-600">
                   Pomoberry
                 </h2>
               )}
