@@ -33,4 +33,10 @@ Pomoberry was built with the idea of gifting encouragement, so your recordings a
 
 ## 💡 Vision
 Pomoberry isn’t just about tracking time—it’s about motivation and care.  
-Future versions will expand customization options, add more giftable features, and continue blending productivity with encouragement.
+Future updates will include:  
+- 🎨 **More customization** – Themes, characters, and new alarm styles.  
+- 📱 **Responsive design** – Optimized layouts for mobile, tablet, and desktop experiences.  
+- 🤝 **Expanded gift features** – Easier ways to send personalized Pomoberry sessions to friends.  
+- 🔔 **Smarter notifications** – Subtle reminders and encouragements beyond just alarms.  
+
+
