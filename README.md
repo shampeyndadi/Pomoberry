@@ -2,7 +2,7 @@
 
 Pomoberry is a **giftable Pomodoro application** designed to motivate and inspire productivity in a fun, personalized way.  
 
-Instead of just being a timer, Pomoberry adds a personal touch: you (or a friend) can attach **Pomokeys** that unlock custom notes and recordings, turning focus sessions into something encouraging and unique.
+Instead of just being a timer, Pomoberry adds a personal touch: you (or a friend) can attach custom motivational notes and alarm recordings through **Pomokeys**, turning focus sessions into something encouraging, unique and personalized.
 
 ---
 
