@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Dog from "./Dog";
-import CreateNote from "../Services/CreateNote";
+import CreateNote from "../services/CreateNote";
 import DeleteNote from "../services/DeleteNote";
 
 function Messages({ setShowMessagesModal, account, setAccount }) {
