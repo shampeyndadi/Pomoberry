@@ -10,7 +10,6 @@ Instead of just being a timer, Pomoberry adds a personal touch: you (or a friend
 - 💌 **Custom Notes** – Cute motivational messages that appear during your sessions.  
 - 🎵 **Custom Recordings** – Personalized alarm sounds or voice notes to brighten your focus time.  
 - 🎁 **Giftable Experience** – Share Pomoberry with someone you care about, making productivity a thoughtful gift.  
-- 🌸 **Cute & Aesthetic UI** – A warm, playful design with friendly visuals to make working enjoyable.  
 
 ---
 
