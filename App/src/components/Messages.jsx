@@ -135,7 +135,7 @@ function Messages({ setShowMessagesModal, account, setAccount }) {
       className="fixed top-0 left-0 right-0 bottom-0 w-full h-full z-[9999] bg-red-500/20 flex items-center justify-center"
       style={{ margin: 0, padding: 0 }}
     >
-      <div className="bg-white w-[43rem] h-[43rem] overflow-auto py-3">
+      <div className="bg-white w-[33rem] sm:w-[35rem] md:w-[38rem] lg:w-[43rem] h-[43rem] overflow-auto py-3">
         <div className="flex flex-col">
           <div className="flex justify-between items-center px-3">
             <div></div>

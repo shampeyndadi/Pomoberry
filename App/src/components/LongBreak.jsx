@@ -83,7 +83,7 @@ function MyTimer({
     <div>
       <div
         onClick={() => setShowSettings(true)}
-        className="text-[15rem] font-bold text-center text-pink-300 hover:cursor-pointer"
+        className="text-[6rem] sm:text-[8rem] md:text-[12rem] lg:text-[15rem] font-bold text-center text-pink-600 hover:cursor-pointer"
       >
         <span>{String(minutes).padStart(2, "0")}</span>:
         <span>{String(seconds).padStart(2, "0")}</span>

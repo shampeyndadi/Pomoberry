@@ -102,7 +102,10 @@ function Main() {
 
   function confirmationModal() {
     return (
-      <div className="fixed top-0 left-0 right-0 bottom-0 w-full h-full z-[9999] bg-red-500/20 flex items-center justify-center">
+      <div
+        className="fixed top-0 left-0 right-0 bottom-0 w-full h-full z-[9999] bg-red-500/20 flex items-center justify-center"
+        style={{ margin: 0, padding: 0 }}
+      >
         <div className="bg-white py-5 px-5 rounded-lg shadow">
           <div className="flex flex-col items-center space-y-7 px-5 py-5">
             <h1 className="font-bold text-center text-xl text-pink-600">
@@ -150,7 +153,7 @@ function Main() {
                   }}
                 >
                   <div className="flex flex-col items-center">
-                    <h2 className="text-[4rem] sm:text-[7rem] md:text-[8rem] lg:text-[10rem] text-center font-bold text-pink-600">
+                    <h2 className="text-[6rem] sm:text-[7rem] md:text-[8rem] lg:text-[10rem] text-center font-bold text-pink-600 hover:cursor-pointer">
                       Pomoberry
                     </h2>
 
@@ -166,7 +169,7 @@ function Main() {
                   </div>
                 </div>
               ) : (
-                <h2 className="text-[4rem] sm:text-[7rem] md:text-[8rem] lg:text-[10rem] text-center font-bold text-pink-600">
+                <h2 className="text-[6rem] sm:text-[7rem] md:text-[8rem] lg:text-[10rem] text-center font-bold text-pink-600">
                   Pomoberry
                 </h2>
               )}
@@ -262,7 +265,7 @@ function Main() {
                   setHighlight("start");
                   resetTimer("Pomodoro");
                 }}
-                className={`text-xl italic hover:cursor-pointer hover:bg-pink-300 py-3 px-3 rounded-lg ${
+                className={`text-xl text-pink-600 font-bold hover:cursor-pointer hover:bg-pink-300 py-3 px-3 rounded-lg ${
                   highlight === "start" ? "bg-pink-300" : "bg-transparent"
                 }`}
               >
@@ -274,7 +277,7 @@ function Main() {
                   setHighlight("break");
                   resetTimer("Break");
                 }}
-                className={`text-xl italic hover:cursor-pointer hover:bg-pink-300 py-3 px-3 rounded-lg ${
+                className={`text-xl text-pink-600 font-bold hover:cursor-pointer hover:bg-pink-300 py-3 px-3 rounded-lg ${
                   highlight === "break" ? "bg-pink-300" : "bg-transparent"
                 }`}
               >
@@ -286,7 +289,7 @@ function Main() {
                   setHighlight("long-break");
                   resetTimer("LongBreak");
                 }}
-                className={`text-xl italic hover:cursor-pointer hover:bg-pink-300 py-3 px-3 rounded-lg ${
+                className={`text-xl text-pink-600 font-bold hover:cursor-pointer hover:bg-pink-300 py-3 px-3 rounded-lg ${
                   highlight === "long-break" ? "bg-pink-300" : "bg-transparent"
                 }`}
               >
@@ -296,7 +299,7 @@ function Main() {
           </div>
         </div>
 
-        <div className="flex mt-4 px-6">
+        <div className="fixed bottom-4 left-5">
           {!account ? (
             <div
               className="border rounded-lg px-3 py-4 text-black border-black hover:cursor-pointer hover:border-pink-600 hover:text-pink-600"
