@@ -1,7 +1,7 @@
 # 🍓 Pomoberry
 
 Pomoberry is a **giftable Pomodoro application** designed to motivate and inspire productivity in a fun, personalized way.  
-It combines time management with encouragement by allowing you (or a friend) to add custom notes and recordings for each Pomodoro session.
+It combines time management with encouragement by allowing you (or a friend) through pomokeys to add custom notes and recordings for each Pomodoro session.
 
 ---
 
