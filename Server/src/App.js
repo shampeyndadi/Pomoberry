@@ -26,7 +26,7 @@ const Recording = require("../models/Recordings");
 
 const app = express();
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.use(
   session({
@@ -50,7 +50,7 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/sounds", express.static(path.join(__dirname, "sounds")));
 
 app.listen(PORT, () => {
-  console.log("Listening to port 3000");
+  console.log(`Listening on port ${PORT}`);
 });
 
 app.get("/", (req, res) => {
