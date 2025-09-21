@@ -24,7 +24,7 @@ Instead of just being a timer, Pomoberry adds a personal touch: you (or a friend
 ## Recordings, Storage & Privacy
 Pomoberry was built with the idea of gifting encouragement, so your recordings and notes are handled carefully:  
 - **Recordings** are uploaded and stored securely in **Supabase storage**. Each file gets a unique, private path.  
-- **Access Control** – Recordings are never public by default; they are retrieved through **temporary signed URLs** that expire after a short time.  
+- **Access Control** – Recordings are never public by default; they are retrieved through **temporary signed URLs** that expire after 24 hours.  
 - **Notes** are stored in MongoDB alongside your Pomokey, linked only to your account.  
 - **Privacy First** – Nothing is shared with others unless you choose to gift your Pomoberry key.  
 - **No Tracking** – Pomoberry doesn’t sell or track your data; its purpose is motivation, not analytics.  
