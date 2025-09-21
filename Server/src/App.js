@@ -95,7 +95,7 @@ app.post("/api/account", async (req, res) => {
 
             const { data, error } = await supabase.storage
               .from("pomoberry-recordings")
-              .createSignedUrl(rec.fileUrl, 60 * 60);
+              .createSignedUrl(rec.fileUrl, 60 * 60 * 24);
 
             return {
               ...rec.toObject(),
@@ -170,7 +170,7 @@ app.post("/api/account/login", async (req, res) => {
 
         const { data, error } = await supabase.storage
           .from("pomoberry-recordings")
-          .createSignedUrl(rec.fileUrl, 60 * 60);
+          .createSignedUrl(rec.fileUrl, 60 * 60 * 24);
 
         return {
           ...rec.toObject(),
@@ -206,7 +206,7 @@ app.get("/api/account/:accountId", async (req, res) => {
 
         const { data, error } = await supabase.storage
           .from("pomoberry-recordings")
-          .createSignedUrl(rec.fileUrl, 60 * 60);
+          .createSignedUrl(rec.fileUrl, 60 * 60 * 24);
 
         return {
           ...rec.toObject(),
