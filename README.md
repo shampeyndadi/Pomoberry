@@ -37,6 +37,11 @@ Future updates will include:
 - 🎨 **More customization** – Themes, characters, and new alarm styles.  
 - 📱 **Responsive design** – Optimized layouts for mobile, tablet, and desktop experiences.  
 - 🤝 **Expanded gift features** – Easier ways to send personalized Pomoberry sessions to friends.  
-- 🔔 **Smarter notifications** – Subtle reminders and encouragements beyond just alarms.  
+- 🔔 **Smarter notifications** – Subtle reminders and encouragements beyond just alarms.
 
+--- 
+
+## 🛠️ Status
+Pomoberry is **undergoing active testing and continuous improvement**.  
+Features, performance, and design are being refined to provide a smoother and more enjoyable experience with each update.
 
