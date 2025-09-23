@@ -21,6 +21,17 @@ Instead of just being a timer, Pomoberry adds a personal touch: you (or a friend
 
 ---
 
+## Deployment & Reliability
+Pomoberry’s backend is hosted on **Render**, which may put the service to sleep after periods of inactivity on the free tier.  
+To ensure a smooth experience, **UptimeRobot** is used to periodically ping the server and keep it active, reducing login delays caused by cold starts.
+
+- **Render (Backend Hosting):** Node.js + Express + MongoDB  
+- **Vercel (Frontend Hosting):** React + Vite  
+- **Supabase (Storage):** Recordings & media files  
+- **UptimeRobot (Keep Alive):** Prevents backend cold starts by sending periodic pings
+
+---
+
 ## Recordings, Storage & Privacy
 Pomoberry was built with the idea of gifting encouragement, so your recordings and notes are handled carefully:  
 - **Recordings** are uploaded and stored securely in **Supabase storage**. Each file gets a unique, private path.  
@@ -39,7 +50,7 @@ Future updates will include:
 - **Expanded gift features** – Easier ways to send personalized Pomoberry sessions to friends.  
 - **Smarter notifications** – Subtle reminders and encouragements beyond just alarms.
 
---- 
+
 
 ## Status
 Pomoberry is **undergoing active testing and continuous improvement**.  
