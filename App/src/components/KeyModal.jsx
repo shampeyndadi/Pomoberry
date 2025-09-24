@@ -195,7 +195,7 @@ function KeyModal({ setShowKeyModal, setAccount }) {
         <div className="flex flex-col items-center space-y-5">
           <div className="flex items-center justify-between w-[30rem]">
             <div className="h-6 w-6"></div>
-            <h1 className="font-bold text-pink-600 text-2xl">
+            <h1 className="font-bold text-pink-600 text-xl sm:text-2xl">
               Enter your PomoKey
             </h1>
             <div
@@ -244,7 +244,7 @@ function KeyModal({ setShowKeyModal, setAccount }) {
           <div className="flex items-center justify-between w-[30rem]">
             <div className="flex items-center justify-between w-[30rem]">
               <div className="h-6 w-6"></div>
-              <h1 className="font-bold text-pink-600 text-2xl">
+              <h1 className="font-bold text-pink-600 text-xl sm:text-2xl">
                 Generate a PomoKey
               </h1>
               <div
@@ -292,7 +292,7 @@ function KeyModal({ setShowKeyModal, setAccount }) {
               </svg>
             </div>
 
-            <h1 className="font-bold text-3xl">{pomokey}</h1>
+            <h1 className="font-bold text-2xl sm:text-3xl">{pomokey}</h1>
             <div
               onClick={() => {
                 pomokey && navigator.clipboard.writeText(pomokey);
@@ -326,7 +326,7 @@ function KeyModal({ setShowKeyModal, setAccount }) {
         className="fixed top-0 left-0 right-0 bottom-0 w-full h-full z-[9999] bg-red-500/20 flex items-center justify-center"
         style={{ margin: 0, padding: 0 }}
       >
-        <div className="bg-white flex flex-col items-center justify-center space-y-8 px-4 py-5 rounded-md border-shadow h-[15rem]">
+        <div className=" bg-white flex flex-col items-center justify-center space-y-6 sm:space-y-8 px-4 py-5 rounded-md shadow w-[90%] max-w-sm sm:max-w-md md:max-w-lg max-h-[90vh] overflow-y-auto">
           {displayView()}
           <Switch checked={checked} setChecked={setChecked} />
         </div>

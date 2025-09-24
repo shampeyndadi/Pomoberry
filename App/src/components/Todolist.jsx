@@ -50,16 +50,16 @@ function Todolist({ showTodoList, setShowTodoList }) {
     });
     if (tasks.length === 0) {
       return (
-        <div className="flex items-center justify-center h-[38rem] relative z-0">
+        <div className="flex items-center justify-center sm:h-[33rem] relative z-0">
           <Koala />
         </div>
       );
     } else {
       return (
-        <div className="h-[38rem] overflow-y-auto space-y-3">
+        <div className="h-[30rem] sm:h-[38rem] overflow-y-auto space-y-3">
           <div className="flex flex-col space-y-4">
             <h2 className="font-bold text-lg text-pink-400">Filter:</h2>
-            <div className="flex space-x-5">
+            <div className="flex space-x-5 overflow-x-auto">
               <button
                 onClick={() => setHighlight("all")}
                 className={`hover:bg-gray-200 px-3 py-1 rounded-lg ${
@@ -155,7 +155,7 @@ function Todolist({ showTodoList, setShowTodoList }) {
         className="fixed top-0 left-0 right-0 bottom-0 w-full h-full z-[9999] bg-red-500/20 flex items-center justify-center"
         style={{ margin: 0, padding: 0 }}
       >
-        <div className="bg-white p-5 rounded-lg shadow-lg space-y-3 h-[44rem] w-[33rem] lg:h-[50rem] md:h-[48rem] lg:w-[50rem] md:w-[40rem] sm:w-[37rem]">
+        <div className=" bg-white p-5 rounded-lg shadow-lg space-y-3 w-[90%] max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl 2xl:max-w-4xl min-h-[30rem] sm:min-h-[35rem] md:min-h-[40rem] lg:min-h-[45rem] xl:min-h-[50rem]">
           <div className="flex flex-col space-y-3 py-2 px-3">
             <div className="flex flex-col space-y-3">
               <div className="flex justify-between">
@@ -184,7 +184,7 @@ function Todolist({ showTodoList, setShowTodoList }) {
               </div>
 
               <hr></hr>
-              <div className="flex space-x-5 z-10">
+              <div className="flex flex-col sm:flex-row sm:space-x-5 space-y-3 sm:space-y-0 z-10">
                 <input
                   value={taskName}
                   onChange={(e) => setTaskName(e.target.value)}
@@ -203,7 +203,7 @@ function Todolist({ showTodoList, setShowTodoList }) {
                 </select>
                 <button
                   onClick={addTask}
-                  className="bg-pink-400 px-5 py-3 w-[5rem] rounded-lg text-white hover:cursor-pointer hover:shadow-md"
+                  className="bg-pink-400 px-5 py-3 w-full sm:w-[5rem] rounded-lg text-white hover:cursor-pointer hover:shadow-md"
                 >
                   Add
                 </button>

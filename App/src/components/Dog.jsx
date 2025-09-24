@@ -37,8 +37,8 @@ const Dog = () => {
             <div className="dog__ear-r" />
           </div>
         </div>
-        <div className="flex absolute top-3/4 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50">
-          <h1 className="font-bold text-lg lg:text-xl text-pink-600">
+        <div className="flex items-center justify-center w-full h-full px-4 z-50">
+          <h1 className="font-bold text-base sm:text-lg md:text-xl lg:text-2xl text-black text-center">
             No Messages Found
           </h1>
         </div>

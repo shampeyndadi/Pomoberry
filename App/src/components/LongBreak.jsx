@@ -88,7 +88,7 @@ function MyTimer({
         <span>{String(minutes).padStart(2, "0")}</span>:
         <span>{String(seconds).padStart(2, "0")}</span>
       </div>
-      <div className="flex justify-evenly bg-white py-3 px-2 rounded-full shadow-lg">
+      <div className="flex justify-evenly bg-white py-1 md:py-3 px-2 rounded-full shadow-lg">
         <button
           className={`cursor-pointer py-3 px-3 rounded-lg hover:bg-pink-300 ${
             highlight === "start" ? "bg-pink-300" : "bg-transparent"

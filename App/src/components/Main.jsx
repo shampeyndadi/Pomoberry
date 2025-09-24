@@ -106,13 +106,13 @@ function Main() {
         className="fixed top-0 left-0 right-0 bottom-0 w-full h-full z-[9999] bg-red-500/20 flex items-center justify-center"
         style={{ margin: 0, padding: 0 }}
       >
-        <div className="bg-white py-5 px-5 rounded-lg shadow">
-          <div className="flex flex-col items-center space-y-7 px-5 py-5">
-            <h1 className="font-bold text-center text-xl text-pink-600">
+        <div className="bg-white w-[90%] max-w-sm sm:max-w-md md:max-w-lg rounded-lg shadow px-4 py-5 sm:px-6 sm:py-6">
+          <div className="flex flex-col items-center space-y-6 sm:space-y-7">
+            <h1 className="font-bold text-center text-lg sm:text-xl md:text-2xl text-pink-600">
               Are you sure you want to go back to guest view?
             </h1>
 
-            <div className="flex space-x-3">
+            <div className="flex flex-col sm:flex-row gap-3 sm:space-x-3 w-full sm:w-auto justify-center">
               <button
                 onClick={() => {
                   logout();
@@ -143,8 +143,8 @@ function Main() {
         <Container />
         <Navbar showTodoList={showTodolist} setShowTodoList={setShowTodoList} />
 
-        <div className="flex items-center justify-center h-[47rem]">
-          <div className="flex flex-col space-y-5">
+        <div className="flex items-center justify-center py-20 sm:py-10 md:py-12 lg:py-16">
+          <div className="flex flex-col space-y-5 text-center">
             <div className="flex flex-col">
               {account ? (
                 <div
@@ -153,7 +153,7 @@ function Main() {
                   }}
                 >
                   <div className="flex flex-col items-center">
-                    <h2 className="text-[6rem] sm:text-[7rem] md:text-[8rem] lg:text-[10rem] text-center font-bold text-pink-600 hover:cursor-pointer">
+                    <h2 className="text-[4rem] sm:text-[5rem] md:text-[6rem] lg:text-[7rem] xl:text-[8rem] text-center font-bold text-pink-600">
                       Pomoberry
                     </h2>
 
@@ -169,7 +169,7 @@ function Main() {
                   </div>
                 </div>
               ) : (
-                <h2 className="text-[6rem] sm:text-[7rem] md:text-[8rem] lg:text-[10rem] text-center font-bold text-pink-600">
+                <h2 className="text-[4rem] sm:text-[5rem] md:text-[6rem] lg:text-[7rem] xl:text-[8rem] text-center font-bold text-pink-600">
                   Pomoberry
                 </h2>
               )}
@@ -265,7 +265,7 @@ function Main() {
                   setHighlight("start");
                   resetTimer("Pomodoro");
                 }}
-                className={`text-xl text-pink-600 font-bold hover:cursor-pointer hover:bg-pink-300 py-3 px-3 rounded-lg ${
+                className={`text-lg sm:text-xl text-pink-600 font-bold hover:cursor-pointer hover:bg-pink-300 py-3 px-3 rounded-lg ${
                   highlight === "start" ? "bg-pink-300" : "bg-transparent"
                 }`}
               >
@@ -277,7 +277,7 @@ function Main() {
                   setHighlight("break");
                   resetTimer("Break");
                 }}
-                className={`text-xl text-pink-600 font-bold hover:cursor-pointer hover:bg-pink-300 py-3 px-3 rounded-lg ${
+                className={`text-lg sm:text-xl text-pink-600 font-bold hover:cursor-pointer hover:bg-pink-300 py-3 px-3 rounded-lg ${
                   highlight === "break" ? "bg-pink-300" : "bg-transparent"
                 }`}
               >
@@ -289,7 +289,7 @@ function Main() {
                   setHighlight("long-break");
                   resetTimer("LongBreak");
                 }}
-                className={`text-xl text-pink-600 font-bold hover:cursor-pointer hover:bg-pink-300 py-3 px-3 rounded-lg ${
+                className={`text-lg sm:text-xl text-pink-600 font-bold hover:cursor-pointer hover:bg-pink-300 py-3 px-3 rounded-lg ${
                   highlight === "long-break" ? "bg-pink-300" : "bg-transparent"
                 }`}
               >

@@ -167,7 +167,7 @@ function Settings({
       >
         <div
           onClick={(e) => e.stopPropagation()}
-          className="bg-white p-5 rounded-lg shadow-lg space-y-3"
+          className="bg-white p-5 rounded-lg shadow-lg space-y-3 w-[90%] max-w-md sm:max-w-lg md:max-w-2xl lg:max-w-3xl max-h-[90vh] overflow-y-auto"
         >
           <div className="flex justify-between items-center">
             <div></div>
@@ -209,38 +209,38 @@ function Settings({
             <p>Timer</p>
           </div>
 
-          <div className="flex space-x-5">
-            <div className="flex flex-col space-y-2">
+          <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col space-y-2 flex-1">
               <label className="mr-2 font-bold text-pink-600">Pomodoro</label>
               <input
                 type="number"
                 min="1"
                 max="60"
-                className="border border-gray-300 rounded-lg p-2 w-[9rem]"
+                className="border border-gray-300 rounded-lg p-2 w-full sm:w-[14rem]"
                 value={pomodoroDuration}
                 onChange={(e) => setPomodoroDuration(Number(e.target.value))}
               />
             </div>
 
-            <div className="flex flex-col space-y-2">
+            <div className="flex flex-col space-y-2 flex-1">
               <label className="mr-2 font-bold text-pink-600">Break</label>
               <input
                 type="number"
                 min="1"
                 max="60"
-                className="border border-gray-300 rounded-lg p-2 w-[9rem]"
+                className="border border-gray-300 rounded-lg p-2 w-full sm:w-[14rem]"
                 value={breakDuration}
                 onChange={(e) => setBreakDuration(Number(e.target.value))}
               />
             </div>
 
-            <div className="flex flex-col space-y-2">
+            <div className="flex flex-col space-y-2 flex-1">
               <label className="mr-2 font-bold text-pink-600">Long Break</label>
               <input
                 type="number"
                 min="1"
                 max="60"
-                className="border border-gray-300 rounded-lg p-2 w-[9rem]"
+                className="border border-gray-300 rounded-lg p-2 w-full sm:w-[14rem]"
                 value={longBreakDuration}
                 onChange={(e) => setLongBreakDuration(Number(e.target.value))}
               />
@@ -302,17 +302,17 @@ function Settings({
               </div>
 
               <div className="flex flex-col space-y-6">
-                <div className="flex items-center justify-between px-3">
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-2 px-3">
                   <h1 className="font-bold text-pink-600">Pomodoro Alarm</h1>
                   {displayEditAudio({ id: "pomodoro" })}
                 </div>
 
-                <div className="flex items-center justify-between px-3">
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-2 px-3">
                   <h1 className="font-bold text-pink-600">Break Alarm</h1>
                   {displayEditAudio({ id: "break" })}
                 </div>
 
-                <div className="flex items-center justify-between px-3">
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-2 px-3">
                   <h1 className="font-bold text-pink-600">Long Break Alarm</h1>
                   {displayEditAudio({ id: "long-break" })}
                 </div>
@@ -325,7 +325,7 @@ function Settings({
               onClick={() => {
                 onClose();
               }}
-              className="bg-pink-300 text-white rounded-lg p-2 hover:cursor-pointer hover:bg-pink-600"
+              className="bg-pink-300 text-white rounded-lg p-2 w-full sm:w-auto hover:cursor-pointer hover:bg-pink-600"
             >
               Save & Exit
             </button>

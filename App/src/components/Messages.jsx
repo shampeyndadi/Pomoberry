@@ -57,7 +57,7 @@ function Messages({ setShowMessagesModal, account, setAccount }) {
     if (showConfirmationModal === true) {
       return (
         <div className="fixed top-0 left-0 right-0 bottom-0 w-full h-full z-[9999] bg-red-500/20 flex items-center justify-center">
-          <div className="bg-white py-5 px-5 rounded-lg shadow">
+          <div className="bg-white py-3 px-4 sm:py-4 sm:px-5 md:py-5 md:px-6 w-[90%] max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl rounded-lg shadow">
             <div className="flex flex-col items-center space-y-7 px-5 py-5">
               <h1 className="font-bold text-center text-xl text-pink-600">
                 Are you sure you want to delete this message?
@@ -135,7 +135,7 @@ function Messages({ setShowMessagesModal, account, setAccount }) {
       className="fixed top-0 left-0 right-0 bottom-0 w-full h-full z-[9999] bg-red-500/20 flex items-center justify-center"
       style={{ margin: 0, padding: 0 }}
     >
-      <div className="bg-white w-[33rem] sm:w-[35rem] md:w-[38rem] lg:w-[43rem] h-[43rem] overflow-auto py-3">
+      <div className="bg-white w-[90%] max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl max-h-[90vh] overflow-y-auto py-3 rounded-lg shadow">
         <div className="flex flex-col">
           <div className="flex justify-between items-center px-3">
             <div></div>
