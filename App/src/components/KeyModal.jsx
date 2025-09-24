@@ -192,16 +192,16 @@ function KeyModal({ setShowKeyModal, setAccount }) {
   function displayView() {
     if (checked === "enter") {
       return (
-        <div className="flex flex-col items-center space-y-5">
-          <div className="flex items-center justify-between w-[30rem]">
-            <div className="h-6 w-6"></div>
-            <h1 className="font-bold text-pink-600 text-xl sm:text-2xl">
+        <div className="flex flex-col items-center space-y-5 w-full">
+          <div className="flex items-center w-full relative">
+            <h1 className="mx-auto font-bold text-pink-600 text-lg sm:text-xl md:text-2xl">
               Enter your PomoKey
             </h1>
             <div
               onClick={() => {
                 setShowKeyModal(false);
               }}
+              className="absolute right-0"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -220,18 +220,18 @@ function KeyModal({ setShowKeyModal, setAccount }) {
             </div>
           </div>
 
-          <div className="flex">
+          <div className="flex flex-col sm:flex-row w-full sm:w-auto items-center gap-3">
             <input
               type="text"
               onChange={(e) => setPomokey(e.target.value)}
-              className="border-2 border-pink-300 rounded-md px-3 py-2 focus:outline-pink-300"
+              className="border-2 border-pink-300 rounded-md px-3 py-2 focus:outline-pink-300 w-full sm:w-auto"
               placeholder="Enter your key here..."
             />
             <button
               onClick={() => {
                 createAccount(pomokey);
               }}
-              className="bg-pink-300 text-white px-3 py-2 rounded-md ml-3 hover:bg-pink-400"
+              className="bg-pink-300 text-white px-4 py-2 rounded-md hover:bg-pink-400 w-full sm:w-auto"
             >
               Submit
             </button>
@@ -240,59 +240,55 @@ function KeyModal({ setShowKeyModal, setAccount }) {
       );
     } else {
       return (
-        <div className="flex flex-col items-center justify-center space-y-5">
-          <div className="flex items-center justify-between w-[30rem]">
-            <div className="flex items-center justify-between w-[30rem]">
-              <div className="h-6 w-6"></div>
-              <h1 className="font-bold text-pink-600 text-xl sm:text-2xl">
-                Generate a PomoKey
-              </h1>
-              <div
-                onClick={() => {
-                  setShowKeyModal(false);
-                }}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="1.5"
-                  stroke="currentColor"
-                  className="w-6 h-6 hover:cursor-pointer"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M6 18 18 6M6 6l12 12"
-                  />
-                </svg>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex items-center space-x-3">
+        <div className="flex flex-col items-center justify-center space-y-5 w-full">
+          <div className="flex items-center w-full relative">
+            <h1 className="mx-auto font-bold text-pink-600 text-lg sm:text-xl md:text-2xl">
+              Generate a PomoKey
+            </h1>
             <div
               onClick={() => {
-                generatePomokey();
+                setShowKeyModal(false);
               }}
+              className="absolute right-0"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
-                stroke-width="1.5"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="w-6 h-6 hover:cursor-pointer"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 18 18 6M6 6l12 12"
+                />
+              </svg>
+            </div>
+          </div>
+
+          <div className="flex flex-row items-center gap-3">
+            <div onClick={generatePomokey}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
                 stroke="currentColor"
                 className="w-8 h-8 hover:cursor-pointer hover:text-pink-600"
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"
                 />
               </svg>
             </div>
 
-            <h1 className="font-bold text-2xl sm:text-3xl">{pomokey}</h1>
+            <h1 className="font-bold text-xl sm:text-2xl md:text-3xl">
+              {pomokey}
+            </h1>
             <div
               onClick={() => {
                 pomokey && navigator.clipboard.writeText(pomokey);
@@ -303,13 +299,13 @@ function KeyModal({ setShowKeyModal, setAccount }) {
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
-                stroke-width="1.5"
+                strokeWidth="1.5"
                 stroke="currentColor"
-                class="w-8 h-8 hover:cursor-pointer hover:text-pink-600"
+                className="w-8 h-8 hover:cursor-pointer hover:text-pink-600"
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   d="M15.666 3.888A2.25 2.25 0 0 0 13.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 0 1-.75.75H9a.75.75 0 0 1-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 0 1-2.25 2.25H6.75A2.25 2.25 0 0 1 4.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 0 1 1.927-.184"
                 />
               </svg>
