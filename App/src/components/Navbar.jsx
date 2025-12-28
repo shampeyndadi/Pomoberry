@@ -14,7 +14,6 @@ function Navbar({ showTodolist, setShowTodoList }) {
           >
             To Do list
           </button>
-          hello
         </div>
       </div>
     </>

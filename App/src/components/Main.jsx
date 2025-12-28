@@ -9,6 +9,7 @@ import Todolist from "./Todolist";
 import KeyModal from "./KeyModal";
 import Messages from "./Messages";
 import LogoutAccount from "../services/LogoutAccount";
+import Tooltip from "./Tooltip";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -319,6 +320,10 @@ function Main() {
               Exit
             </div>
           )}
+        </div>
+
+        <div className="fixed bottom-8 right-5">
+          <Tooltip />
         </div>
       </div>
     </>
