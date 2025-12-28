@@ -322,9 +322,11 @@ function Main() {
           )}
         </div>
 
-        <div className="fixed bottom-8 right-5">
-          <Tooltip />
-        </div>
+        {!account ? null : (
+          <div className="fixed bottom-8 right-5">
+            <Tooltip />
+          </div>
+        )}
       </div>
     </>
   );
