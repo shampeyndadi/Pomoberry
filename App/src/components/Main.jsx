@@ -10,6 +10,7 @@ import KeyModal from "./KeyModal";
 import Messages from "./Messages";
 import LogoutAccount from "../services/LogoutAccount";
 import Tooltip from "./Tooltip";
+import Letters from "./Letters";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -32,6 +33,7 @@ function Main() {
   const [showKeyModal, setShowKeyModal] = useState(false);
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [showMessagesModal, setShowMessagesModal] = useState(false);
+  const [showLettersModal, setShowLettersModal] = useState(false);
 
   const [account, setAccount] = useState(null);
 
@@ -197,6 +199,8 @@ function Main() {
                 setAccount={setAccount}
               />
             )}
+
+            <Letters />
 
             {showConfirmationModal && confirmationModal()}
 
